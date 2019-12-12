@@ -4,10 +4,7 @@
     app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
         $stateProvider
         .state("home", {
-            url: "/",
-            templateUrl: "app/components/users/users.tpl.html",
-            controller: "UsersCtrl",
-            controllerAs: "usrctrl"
+            url: "/"
         });
 
         $urlRouterProvider.otherwise("/");

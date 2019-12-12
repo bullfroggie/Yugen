@@ -18,9 +18,17 @@ def index_page():
 def get_users():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM users")
-    users = cursor.fetchAll()
+    users = cursor.fetchall()
     
     return jsonify(users)
+
+@app.route("/api/accommodation", methods=["GET"])
+def get_accommodation():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM accommodation")
+    accommodation = cursor.fetchall()
+
+    return jsonify(accommodation)
 
 
 
