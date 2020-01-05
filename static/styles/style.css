@@ -1,128 +1,130 @@
 .wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
 }
 
 #sidebar {
-    min-width: 15rem;
-    width: 15rem;
-    min-height: 100vh;
-    background-color: #F44336;
-    color: #fff;
-    transition: all 0.3s;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+	min-width: 15rem;
+	width: 15rem;
+	min-height: 100vh;
+	background-color: #f44336;
+	color: #fff;
+	transition: all 0.3s;
+	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: #fff;
+	padding: 20px;
+	background: #fff;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #D50000;
+	padding: 20px 0;
+	border-bottom: 1px solid #d50000;
 }
 
 #sidebar ul p {
-    color: #fff;
-    padding: 10px;
+	color: #fff;
+	padding: 10px;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
+	padding: 10px;
+	font-size: 1.1em;
+	display: block;
 }
 #sidebar ul li a:hover {
-    color: whitesmoke;
-    background: #FF8A80;
+	color: whitesmoke;
+	background: #ff8a80;
 }
 
 #sidebar ul li.active > a {
-    color: whitesmoke;
-    background: #D50000;
+	color: whitesmoke;
+	background: #d50000;
 }
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
+	font-size: 0.9em !important;
+	padding-left: 30px !important;
 }
 
 #sidebar.active {
-    margin-left: -250px;
+	margin-left: -250px;
 }
 
 @media (max-width: 760px) {
-    #sidebar {
-        margin-left: -15rem;
-    }
-    #sidebar.active {
-        margin-left: 0px;
-    }
+	#sidebar {
+		margin-left: -15rem;
+	}
+	#sidebar.active {
+		margin-left: 0px;
+	}
 }
 
 body {
-    font-family: sans-serif;
-    background: lightgrey;
+	font-family: sans-serif;
+	background: lightgrey;
 }
 
 p {
-    font-family: sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
+	font-family: sans-serif;
+	font-size: 1.1em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #999;
 }
 
-a, a:hover, a:focus {
-    color: whitesmoke;
-    text-decoration: none;
-    transition: all 0.3s;
+a,
+a:hover,
+a:focus {
+	color: whitesmoke;
+	text-decoration: none;
+	transition: all 0.3s;
 }
 
 #logout {
-    text-align: center;
+	text-align: center;
 }
 
 #welcome {
-    text-align: center;
-    color: lightgrey;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+	text-align: center;
+	color: lightgrey;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .title {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.send-button{
-	background: #54C7C3;
-	width:100%;
+.send-button {
+	background: #54c7c3;
+	width: 100%;
 	font-weight: 600;
-	color:#fff;
+	color: #fff;
 	padding: 8px 25px;
 }
 
-.g-button{
+.g-button {
 	color: #fff !important;
-	border: 1px solid #D50000;
+	border: 1px solid #d50000;
 	background: #ea4335 !important;
-	width:100%;
+	width: 100%;
 	font-weight: 600;
-	color:#fff;
+	color: #fff;
 	padding: 8px 25px;
 }
 
 .g-button:hover {
-    background: #FF8A80 !important;
+	background: #ff8a80 !important;
 }
 
-h1{
+h1 {
 	font-size: 31px;
 	line-height: 40px;
 	font-weight: 600;
-	color:#4c5357;
+	color: #4c5357;
 }
-h2{
+h2 {
 	color: #5e8396;
 	font-size: 21px;
 	line-height: 32px;
@@ -153,9 +155,9 @@ h2{
 }
 
 #auth {
-    background-image: url("/styles/background_auth.jpg");
-    background-position: right 80px;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    box-shadow: 0 0 30px 30px white inset;
+	background-image: url("/styles/images/background_auth.jpg");
+	background-position: right 80px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	box-shadow: 20px 30px 20px 40px white inset;
 }
