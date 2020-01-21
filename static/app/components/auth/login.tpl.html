@@ -1,63 +1,93 @@
 <div class="container-fluid col-sm-6 p-5" id="auth">
-	<img
-		class="rounded float-left d-block"
-		src="/styles/images/yugen_logo.png"
-		alt="Yugen"
-		width="110px"
-		height="50px"
-	/>
-	<div class="col-md-6 mx-auto text-center">
-		<div>
-			<h3 class="title">WELCOME BACK <i class="fas fa-hand-spock"></i></h3>
-			<h6 class="text-muted">We've missed you!</h6>
-		</div>
-	</div>
-	<br />
-	<div class="row">
-		<div class="col-md-6 mx-auto">
-			<div>
-				<form name="registration">
-					<div class="form-group">
-						<label class="badge">Username</label>
-						<input
-							type="text"
-							name="username"
-							id="username"
-							class="form-control"
-							placeholder="Enter Username"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge">Password</label>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							class="form-control"
-							placeholder="Enter Password"
-							required
-						/>
-					</div>
-					<div class="text-center ">
-						<button type="submit" class=" btn btn-block btn-primary">Log in</button>
-					</div>
-					<div class="col-md-12 ">
-						<div class="login-or">
-							<hr class="hr-or" />
-							<span class="span-or">or</span>
-						</div>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-block g-button" ui-sref="register">
-							<i class="fas fa-user-plus"></i> Register a new account
-						</button>
-					</div>
-					<p class="small mt-3 text-center">
-						<a href="" onclick="alert('I Cri Evrytiem 😢')">Forgot Password?</a>
-					</p>
-				</form>
-			</div>
-		</div>
-	</div>
+    <script type="text/ng-template" id="alert.html">
+        <div ng-transclude></div>
+    </script>
+
+    <div
+        uib-alert
+        ng-repeat="alert in alerts"
+        ng-class="'alert-' + (alert.type || 'warning')"
+        close="closeAlert($index)"
+    >
+        {{ alert.msg }}
+    </div>
+    <br />
+    <img
+        class="rounded float-left d-block"
+        src="/styles/images/yugen_logo.png"
+        alt="Yugen"
+        width="110px"
+        height="50px"
+    />
+    <div class="col-md-6 mx-auto text-center bg-white">
+        <div>
+            <h3 class="title">
+                WELCOME BACK <i class="fas fa-hand-spock"></i>
+            </h3>
+            <h6 class="text-muted">Ready to boldly go where no man has gone before?</h6>
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div>
+                <form class="shadow p-3 mb-5 bg-white rounded" name="registration" ng-submit="auth.userLogin()">
+                    <div class="form-group">
+                        <label class="badge"
+                            >Email <i class="fas fa-envelope"></i></i
+                        ></label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            placeholder="Enter Email"
+                            ng-model="auth.login.email"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge">Password <i class="fas fa-lock"></i></label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="form-control"
+                            ng-model="auth.login.password"
+                            placeholder="Enter Password"
+                            required
+                        />
+                    </div>
+                    <div class="text-center ">
+                        <button
+                            type="submit"
+                            class=" btn btn-block btn-primary"
+                        ><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Log in <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="login-or">
+                            <hr class="hr-or" />
+                            <span class="span-or">or</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button
+                            class="btn btn-block g-button"
+                            ui-sref="register"
+                        >
+                            <i class="fas fa-user-plus"></i> Register a new
+                            account
+                        </button>
+                    </div>
+                    <p class="small mt-3 text-center">
+                        <a href="" onclick="alert('I Cri Evrytiem 😢')"
+                            >Forgot Password?</a
+                        >
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

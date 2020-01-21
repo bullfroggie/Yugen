@@ -1,138 +1,163 @@
 <div class="container-fluid col-sm-6 p-5" id="auth">
-	<script type="text/ng-template" id="alert.html">
-		<div ng-transclude></div>
-	</script>
+    <script type="text/ng-template" id="alert.html">
+        <div ng-transclude></div>
+    </script>
 
-	<div
-		uib-alert
-		ng-repeat="alert in alerts"
-		ng-class="'alert-' + (alert.type || 'warning')"
-		close="closeAlert($index)"
-	>
-		{{ alert.msg }}
-	</div>
-	<br />
-	<img
-		class="rounded float-left d-block"
-		src="styles/images/yugen_logo.png"
-		alt="Yugen"
-		width="110px"
-		height="50px"
-	/>
-	<div class="col-md-6 mx-auto text-center">
-		<div>
-			<h3 class="title">WELCOME TRAVELER</h3>
-			<h6 class="text-muted">
-				Your next travel will be stress-free,<br />
-				we promise!
-			</h6>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6 mx-auto">
-			<div>
-				<form ng-submit="auth.registerUser()" name="registration">
-					<div class="form-group">
-						<label class="badge"> First Name </label>
-						<input
-							type="text"
-							name="firstName"
-							class="form-control"
-							id="firstName"
-							ng-model="auth.newUser.first_name"
-							placeholder="Enter First Name"
-							minlength="1"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge"> Last Name </label>
-						<input
-							type="text"
-							name="lastName"
-							class="form-control"
-							id="lastName"
-							ng-model="auth.newUser.last_name"
-							placeholder="Enter Last Name"
-							minlength="1"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge"> Username </label>
-						<input
-							type="text"
-							name="username"
-							id="username"
-							class="form-control"
-							ng-model="auth.newUser.username"
-							placeholder="Enter Username"
-							minlength="3"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge"> Password </label>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							class="form-control"
-							ng-model="auth.newUser.password"
-							placeholder="Enter Password"
-							minlength="6"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge"> E-mail </label>
-						<input
-							type="email"
-							name="email"
-							id="email"
-							class="form-control"
-							ng-model="auth.newUser.email"
-							placeholder="Enter E-mail"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="badge">
-							Date of Birth <i class="fas fa-calendar-alt"></i>
-						</label>
-						<input
-							type="date"
-							name="dateOfBirth"
-							id="dateOfBirth"
-							class="form-control"
-							ng-model="auth.newUser.date_of_birth"
-							max="2002-12-31"
-							required
-						/>
-					</div>
-					<div class="text-center ">
-						<button type="submit" class="btn btn-block btn-primary">
-							Create Your Free Account
-						</button>
-					</div>
-					<div class="col-md-12 ">
-						<div class="login-or">
-							<hr class="hr-or" />
-							<span class="span-or"> or </span>
-						</div>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-block g-button" ui-sref="login">
-							<i class="fas fa-sign-in-alt"></i> Log in with an existing one
-						</button>
-					</div>
-					<p class="small mt-3">
-						By signing up, you are indicating that you have read and agree to the
-						<a href="#" class="ps-hero__content__link">Terms of Use</a> and
-						<a href="#" onclick="alert('Privacy is a lie.')">Privacy Policy</a>.
-					</p>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div
+        uib-alert
+        ng-repeat="alert in alerts"
+        ng-class="'alert-' + (alert.type || 'warning')"
+        close="closeAlert($index)"
+    >
+        {{ alert.msg }}
+    </div>
+    <br />
+    <img
+        class="rounded float-left d-block"
+        src="styles/images/yugen_logo.png"
+        alt="Yugen"
+        width="110px"
+        height="50px"
+    />
+    <div class="col-md-6 mx-auto text-center">
+        <div>
+            <h3 class="title">WELCOME TRAVELER</h3>
+            <h6 class="text-muted">
+                Your next travel will be stress-free,<br />
+                we promise!
+            </h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div>
+                <form
+                    class="shadow p-3 mb-5 bg-white rounded"
+                    ng-submit="auth.registerUser()"
+                    name="registration"
+                >
+                    <div class="form-group">
+                        <label class="badge"> First Name </label>
+                        <input
+                            type="text"
+                            name="firstName"
+                            class="form-control"
+                            id="firstName"
+                            ng-model="auth.newUser.first_name"
+                            placeholder="Enter First Name"
+                            minlength="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> Last Name </label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            class="form-control"
+                            id="lastName"
+                            ng-model="auth.newUser.last_name"
+                            placeholder="Enter Last Name"
+                            minlength="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge">
+                            Username <i class="fas fa-user"></i
+                        ></label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            class="form-control"
+                            ng-model="auth.newUser.username"
+                            placeholder="Enter Username"
+                            minlength="3"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge">
+                            Password <i class="fas fa-key"></i
+                        ></label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="form-control"
+                            ng-model="auth.newUser.password"
+                            placeholder="Enter Password"
+                            minlength="6"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> E-mail</label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            ng-model="auth.newUser.email"
+                            placeholder="Enter E-mail"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge">
+                            Date of Birth <i class="fas fa-calendar-alt"></i>
+                        </label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            id="dateOfBirth"
+                            class="form-control"
+                            ng-model="auth.newUser.date_of_birth"
+                            max="{{auth.maxDt}}"
+                            required
+                        />
+                    </div>
+                    <div class="text-center ">
+                        <button type="submit" class="btn btn-block btn-primary">
+                            <span
+                                class="spinner-grow spinner-grow-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                            Create Your Free Account
+                            <span
+                                class="spinner-grow spinner-grow-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="login-or">
+                            <hr class="hr-or" />
+                            <span class="span-or"> or </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-block g-button" ui-sref="login">
+                            <i class="fas fa-sign-in-alt"></i> Log in with an
+                            existing one
+                        </button>
+                    </div>
+                    <p class="small mt-3">
+                        By signing up, you are indicating that you have read and
+                        agree to the
+                        <a href="#" class="ps-hero__content__link"
+                            >Terms of Use</a
+                        >
+                        and
+                        <a href="#" onclick="alert('Privacy is a lie.')"
+                            >Privacy Policy</a
+                        >.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
