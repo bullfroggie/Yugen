@@ -2,7 +2,6 @@
 *.vscode
 *.bak
 .gitignore
-.prettierrc
 
 .vscode/*
 !.vscode/settings.json
