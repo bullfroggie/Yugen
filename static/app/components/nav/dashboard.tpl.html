@@ -1,0 +1,106 @@
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <a class="navbar-brand" href="#">
+                <img
+                    src="styles/images/yugen_logo.png"
+                    width="160"
+                    height="70"
+                    alt="Yūgen logo"
+                />
+            </a>
+        </div>
+
+        <!-- Dashboard for admin -->
+        <ul class="nav flex-column mb-0 list-unstyled components" ng-if="uctrl.loggedIn.user_types_id == 1">
+            <p id="welcome">
+                Admin Panel <i class="fas fa-user-cog"></i>
+            </p>
+            <li class="active">
+                <a ui-sref="yugen_home"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a><i class="fas fa-user-plus"></i> Add Admin</a>
+            </li>
+            <li>
+                <a><i class="fas fa-user-minus"></i> Remove User</a>
+            </li>
+            <li>
+                <a><i class="fas fa-plus-circle"></i> <i class="fas fa-bed"></i> Add Accommodation</a>
+            </li>
+            <li>
+                <a><i class="fas fa-plus-circle"></i> <i class="fas fa-plane"></i> Add Flight</a>
+            </li>
+            <hr />
+            <li>
+                <a id="logout" ng-click="uctrl.userLogout()"
+                    ><i class="fas fa-sign-out-alt"></i> Log out</a
+                >
+            </li>
+        </ul>
+
+        <!-- Dashboard for regular users -->
+        <ul class="nav flex-column mb-0 list-unstyled components" ng-if="uctrl.loggedIn.user_types_id == 2">
+            <p id="welcome">
+                Welcome {{uctrl.loggedIn.first_name}}
+                <span>
+                    <img
+                        src="{{uctrl.loggedIn.profile_image}}"
+                        alt="Profile Image"
+                        width="50"
+                        class="mr-3 rounded-circle img-thumbnail shadow-sm"
+                    />
+                </span>
+            </p>
+            <li class="active">
+                <a ui-sref="yugen_home"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a><i class="fas fa-bed"></i> Accommodations</a>
+            </li>
+            <li>
+                <a><i class="fas fa-plane"></i> Flights</a>
+            </li>
+            <li>
+                <a><i class="fas fa-suitcase-rolling"></i> Reservations / Tickets</a>
+            </li>
+            <hr />
+            <li>
+                <a id="logout" ng-click="uctrl.userLogout()"
+                    ><i class="fas fa-sign-out-alt"></i> Log out</a
+                >
+            </li>
+        </ul>
+    </nav>
+    
+</nav>
+<div id="content">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <button
+                type="button"
+                id="sidebarCollapse"
+                class="btn btn-outline-dark"
+            >
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+        </div>
+    </nav>
+    <div class="p-5">
+        <ui-view></ui-view>
+    </div>
+</div>
+
+
+    <script type="text/javascript">
+        /*
+		Script for sidebar collapsing
+		*/
+        $("#sidebarCollapse").on("click", function() {
+            $("#sidebar, #content").toggleClass("active");
+            $(".collapse.in").toggleClass("in");
+            $("a[aria-expanded=true]").attr("aria-expanded", "false");
+        });
+    </script>
+</div>
