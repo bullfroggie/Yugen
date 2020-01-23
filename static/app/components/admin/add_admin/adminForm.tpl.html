@@ -1,0 +1,113 @@
+<div class="col-md-6 mx-auto">
+    <script type="text/ng-template" id="alert.html">
+        <div ng-transclude></div>
+    </script>
+
+    <div
+        uib-alert
+        ng-repeat="alert in alerts"
+        ng-class="'alert-' + (alert.type || 'warning')"
+        close="closeAlert($index)"
+    >
+        {{ alert.msg }}
+    </div>
+
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <p class="lead text-center">
+                Fill in the form below to add a new administrator to the system.
+            </p>
+            <div>
+                <form
+                    class="shadow p-3 mb-5 bg-white rounded"
+                    ng-submit="aactrl.addAdmin()"
+                    name="registration"
+                >
+                    <div class="form-group">
+                        <label class="badge"> First Name </label>
+                        <input
+                            type="text"
+                            name="firstName"
+                            class="form-control"
+                            id="firstName"
+                            ng-model="aactrl.newAdmin.first_name"
+                            placeholder="Enter First Name"
+                            minlength="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> Last Name </label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            class="form-control"
+                            id="lastName"
+                            ng-model="aactrl.newAdmin.last_name"
+                            placeholder="Enter Last Name"
+                            minlength="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> Username <i class="fas fa-user"></i></label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            class="form-control"
+                            ng-model="aactrl.newAdmin.username"
+                            placeholder="Enter Username"
+                            minlength="3"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> Password <i class="fas fa-key"></i></label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="form-control"
+                            ng-model="aactrl.newAdmin.password"
+                            placeholder="Enter Password"
+                            minlength="6"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge"> E-mail</label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            ng-model="aactrl.newAdmin.email"
+                            placeholder="Enter E-mail"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="badge">
+                            Date of Birth <i class="fas fa-calendar-alt"></i>
+                        </label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            id="dateOfBirth"
+                            class="form-control"
+                            ng-model="aactrl.newAdmin.date_of_birth"
+                            max="{{aactrl.maxDt}}"
+                            required
+                        />
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-block btn-primary">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
