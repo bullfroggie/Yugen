@@ -2,4 +2,8 @@ Yūgen is a one-stop travel web app where you can get ready for your next vacati
 
 You can find a more detailed description of the project in the :point_right: [presentation slides](Web%20Programming%20Project.pdf) I've made :zap:
 
+Demo (Admin):<br>
+<strong>E-mail:</strong> johndoe@gmail.com<br>
+<strong>Password:</strong> testing
+
 ![Yugen logo](/static/styles/images/yugen_logo.png)
