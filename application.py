@@ -27,9 +27,6 @@ def index_page():
 @app.route("/api/user/registration", methods=["POST"])
 def user_registration():
 
-    if "yugen_user" in request.cookies:
-        return "Already logged in!", 200
-
     db = mysql.get_db()
     cursor = db.cursor()
 
@@ -44,7 +41,7 @@ def user_registration():
     else:
         cursor.close()
         return (
-            "This e-mail address has already been registered! Try logging in instead.",
+            "This e-mail address has already been registered!",
             409,
         )
 
@@ -60,7 +57,7 @@ def user_registration():
         request.json["date_of_birth"] = str(dt.date())
 
         cursor.execute(
-            "INSERT INTO users(user_types_id, first_name, last_name, username, password, date_of_birth, email, profile_image, active) VALUES(%(user_type)s, %(first_name)s, %(last_name)s, %(username)s, %(password)s, %(date_of_birth)s, %(email)s, %(profile_image)s, %(active)s)",
+            "INSERT INTO users(user_types_id, first_name, last_name, username, password, date_of_birth, email, profile_image) VALUES(%(user_type)s, %(first_name)s, %(last_name)s, %(username)s, %(password)s, %(date_of_birth)s, %(email)s, %(profile_image)s)",
             request.json,
         )
         db.commit()
@@ -101,6 +98,7 @@ def user_login():
                 expires=datetime.utcnow() + timedelta(days=90),
             )
 
+            cursor.close()
             return resp
         else:
             cursor.close()
@@ -131,6 +129,116 @@ def get_logged_in():
     cursor.close()
 
     return jsonify(user), 200
+
+
+@app.route("/api/users", methods=["GET"])
+def get_all_users():
+    token = request.cookies.get("yugen_user")
+    token_val = jwt.decode(token, app.config.get("SECRET_KEY"))
+
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM users WHERE id != %s", (token_val["sub"],))
+
+    users = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(users), 200
+
+
+@app.route("/api/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    db = mysql.get_db()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+    db.commit()
+    cursor.close()
+
+    return "", 204
+
+
+@app.route("/api/cities", methods=["GET"])
+def get_cities():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM cities ORDER BY name ASC")
+
+    cities = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(cities), 200
+
+
+@app.route("/api/accommodation/types", methods=["GET"])
+def get_accommodation_types():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM accommodation_types")
+
+    accommodation_types = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(accommodation_types), 200
+
+
+@app.route("/api/accommodation", methods=["GET"])
+def get_all_accommodations():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM accommodation")
+
+    accommodations = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(accommodations), 200
+
+
+@app.route("/api/accommodation", methods=["POST"])
+def add_accommodation():
+    db = mysql.get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "INSERT INTO accommodation(accommodation_types_id, cities_id, name, price_per_night, stars, street_address, description, breakfast, internet) VALUES(%(accommodation_types_id)s, %(cities_id)s, %(name)s, %(price_per_night)s, %(stars)s, %(street_address)s, %(description)s, %(breakfast)s, %(internet)s)",
+        request.json,
+    )
+
+    db.commit()
+    cursor.close()
+
+    return jsonify(request.json), 201
+
+
+@app.route("/api/accommodation/<int:accommodation_id>", methods=["GET"])
+def get_accommodation(accommodation_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM accommodation WHERE id = %s", (accommodation_id,))
+
+    accommodation = cursor.fetchone()
+
+    return jsonify(accommodation)
+
+
+@app.route("/api/accommodation/edit/<int:accommodation_id>", methods=["PUT"])
+def edit_accommodation(accommodation_id):
+    db = mysql.get_db()
+    cursor = db.cursor()
+
+    request.json["id"] = accommodation_id
+    cursor.execute(
+        "UPDATE accommodation SET accommodation_types_id = %(accommodation_types_id)s, cities_id = %(cities_id)s, name = %(name)s, price_per_night = %(price_per_night)s, stars = %(stars)s, street_address = %(street_address)s, description = %(description)s, breakfast = %(breakfast)s, internet = %(internet)s WHERE id = %(id)s",
+        request.json,
+    )
+    db.commit()
+
+    return "", 200
+
+
+@app.route("/api/accommodation/<int:accommodation_id>", methods=["DELETE"])
+def delete_accommodation(accommodation_id):
+    db = mysql.get_db()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM accommodation WHERE id = %s", (accommodation_id,))
+    db.commit()
+    cursor.close()
+
+    return "", 204
 
 
 if __name__ == "__main__":
