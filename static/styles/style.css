@@ -2,7 +2,7 @@
 
 body {
     font-family: "Muli", sans-serif;
-    background: white;
+    background: whitesmoke;
 }
 
 p {
@@ -16,7 +16,7 @@ p {
 a,
 a:hover,
 a:focus {
-    color: inherit;
+    color: inherit !important;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -40,7 +40,7 @@ a:focus {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #ff4436;
+    background: #031b4d;
     color: white;
     transition: all 0.3s;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
@@ -71,15 +71,15 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #d50000;
-    background: white;
+    color: white !important;
+    background: #000026;
     cursor: pointer;
 }
 
 #sidebar ul li.active > a,
 a[aria-expanded="true"] {
-    color: white;
-    background: #d50000;
+    color: white !important;
+    background: rgba(235, 240, 249, 0.2);
 }
 
 #content {
@@ -161,6 +161,23 @@ h2 {
     font-weight: 400;
 }
 
+.edit-link {
+    color: #4c8bf5 !important;
+    text-decoration: none;
+}
+
+#jump {
+    color: white !important;
+}
+
+#accommodation-checkbox {
+    margin-top: 28px;
+}
+
+#jumbotron {
+    background-color: rgba(235, 240, 249, 0.8) !important;
+}
+
 .login-or {
     position: relative;
     color: #aaa;
@@ -193,4 +210,8 @@ h2 {
     background-repeat: no-repeat;
     background-color: transparent;
     box-shadow: 20px 30px 20px 40px white inset;
+}
+
+#content {
+    background-color: #fafafa !important;
 }
