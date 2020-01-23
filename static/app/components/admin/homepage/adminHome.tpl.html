@@ -1,0 +1,104 @@
+<div id="jumbotron" class="jumbotron jumbotron-fluid shadow p-3 rounded">
+    <div class="container text-center">
+        <h1 class="display-6">
+            {{ today | date: 'dd-MM-yyyy' }} <i class="fas fa-calendar-day"></i> {{ clock |
+            date:'HH:mm:ss'}} <i class="fas fa-hourglass-end"></i>
+        </h1>
+        <hr class="my-4" />
+        <p class="lead">
+            On this page you can observe and interact with all of the currently active users,
+            accommodations, and flights.
+        </p>
+    </div>
+</div>
+
+<table class="table table-hover text-center shadow p-3 rounded">
+    <h4 class="text-left lead"><strong>Users</strong></h4>
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>User Type</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Date of Birth</th>
+            <th>E-mail</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in ahctrl.users">
+            <td>{{ user.id }}</td>
+            <td ng-if="user.user_types_id == 1">Admin</td>
+            <td ng-if="user.user_types_id == 2">Regular</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.date_of_birth }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="ahctrl.deleteUser( user.id )">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr class="my-4" />
+
+<table class="table table-hover text-center shadow p-3 rounded">
+    <h4 class="text-left lead">Accommodations</h4>
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Accommodation Type</th>
+            <th>City (ID)</th>
+            <th>Address</th>
+            <th>Name</th>
+            <th>Price Per Night</th>
+            <th>Stars</th>
+            <th>Breakfast</th>
+            <th>Internet</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="accommodation in ahctrl.accommodations">
+            <td>{{ accommodation.id }}</td>
+            <td ng-if="accommodation.accommodation_types_id == 1">Hotel</td>
+            <td ng-if="accommodation.accommodation_types_id == 2">Apartment</td>
+            <td ng-if="accommodation.accommodation_types_id == 3">Motel</td>
+            <td>{{ accommodation.cities_id }}</td>
+            <td>{{ accommodation.street_address }}</td>
+            <td>
+                <a
+                    class="edit-link"
+                    ui-sref="dashboard.edit_accommodation({id: accommodation['id']})"
+                    >{{ accommodation.name }}</a
+                >
+            </td>
+            <td>{{ accommodation.price_per_night }} $</td>
+            <td>
+                <span
+                    uib-rating
+                    ng-model="accommodation.stars"
+                    max="5"
+                    read-only="isReadonly"
+                ></span>
+            </td>
+            <td ng-if="accommodation.breakfast == 1">Yes</td>
+            <td ng-if="accommodation.breakfast == 0">No</td>
+            <td ng-if="accommodation.internet == 1">Yes</td>
+            <td ng-if="accommodation.internet == 0">No</td>
+            <td>
+                <button
+                    class="btn btn-danger"
+                    ng-click="ahctrl.deleteAccommodation( accommodation.id )"
+                >
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
