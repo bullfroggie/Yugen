@@ -18,20 +18,52 @@
                     controller: "AuthCtrl",
                     controllerAs: "auth"
                 })
-                .state("user_homepage", {
-                    url: "/",
+                .state("dashboard", {
+                    url: "/dashboard",
                     templateUrl: "app/components/nav/dashboard.tpl.html",
-                    controller: "UserCtrl",
-                    controllerAs: "uctrl"
+                    controller: "DashboardCtrl",
+                    controllerAs: "dctrl"
                 })
-                .state("admin_homepage", {
-                    url: "/admin",
-                    templateUrl: "app/components/nav/dashboard.tpl.html",
-                    controller: "AdminCtrl",
-                    controllerAs: "actrl"
+                .state("dashboard.admin_home", {
+                    url: "/home",
+                    templateUrl: "app/components/admin/homepage/adminHome.tpl.html",
+                    controller: "AdminHomeCtrl",
+                    controllerAs: "ahctrl"
+                })
+                .state("dashboard.add_admin", {
+                    url: "/add_admin",
+                    templateUrl: "app/components/admin/add_admin/adminForm.tpl.html",
+                    controller: "AddAdminCtrl",
+                    controllerAs: "aactrl"
+                })
+                .state("dashboard.add_accommodation", {
+                    url: "/add_accommodation",
+                    templateUrl:
+                        "app/components/admin/add_accommodation/accommodationForm.tpl.html",
+                    controller: "AddAccommodationCtrl",
+                    controllerAs: "aactrl"
+                })
+                .state("dashboard.edit_accommodation", {
+                    url: "/add_accommodation/{id}",
+                    templateUrl:
+                        "app/components/admin/add_accommodation/accommodationForm.tpl.html",
+                    controller: "AddAccommodationCtrl",
+                    controllerAs: "aactrl"
+                })
+                .state("dashboard.add_flight", {
+                    url: "/add_flight",
+                    templateUrl: "app/components/admin/add_flight/flightForm.tpl.html",
+                    controller: "AddFlightCtrl",
+                    controllerAs: "afctrl"
+                })
+                .state("dashboard.edit_flight", {
+                    url: "/add_flight/{id}",
+                    templateUrl: "app/components/admin/add_flight/flightForm.tpl.html",
+                    controller: "AddFlightCtrl",
+                    controllerAs: "afctrl"
                 });
 
-            $urlRouterProvider.otherwise("/register");
+            $urlRouterProvider.otherwise("/dashboard");
         }
     ]);
 })(angular);
