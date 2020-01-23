@@ -23,12 +23,6 @@
                 $scope.alerts.splice(index, 1);
             };
 
-            this.parseJwt = function(token) {
-                var base64Url = token.split(".")[1];
-                var base64 = base64Url.replace("-", "+").replace("_", "/");
-                return JSON.parse($window.atob(base64));
-            };
-
             this.newUser = {
                 user_type: 2,
                 first_name: "",
@@ -37,8 +31,7 @@
                 password: "",
                 date_of_birth: "",
                 email: "",
-                profile_image: "styles/images/regular_user_icon.png", // default profile image
-                active: 1
+                profile_image: "styles/images/regular_user_icon.jpg" // default profile image
             };
 
             this.login = {
@@ -57,7 +50,7 @@
                 $http.post("api/user/registration", that.newUser).then(
                     function(response) {
                         console.log(response);
-                        if (response.status == 200) {
+                        if (response.status == 201) {
                             $state.go("login");
                         }
                     },
@@ -77,7 +70,7 @@
                 $http.post("api/user/login", that.login).then(
                     function(response) {
                         console.log(response);
-                        $state.go("user_homepage");
+                        $state.go("dashboard");
                     },
                     function(reason) {
                         console.log(reason);
