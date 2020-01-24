@@ -244,7 +244,7 @@ def delete_accommodation(accommodation_id):
 @app.route("/api/airlines", methods=["GET"])
 def get_airlines():
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT * FROM airlines")
+    cursor.execute("SELECT * FROM airlines ORDER BY name ASC")
 
     airlines = cursor.fetchall()
     cursor.close()
@@ -261,6 +261,7 @@ def get_flight_types():
     cursor.close()
 
     return jsonify(flight_types), 200
+
 
 @app.route("/api/flights", methods=["GET"])
 def get_all_flights():
@@ -287,12 +288,13 @@ def get_flight_classes():
 @app.route("/api/airports", methods=["GET"])
 def get_airports():
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT * FROM airports")
+    cursor.execute("SELECT * FROM airports ORDER BY name ASC")
 
     airports = cursor.fetchall()
     cursor.close()
 
     return jsonify(airports), 200
+
 
 @app.route("/api/flights", methods=["POST"])
 def add_flight():
@@ -300,7 +302,7 @@ def add_flight():
     cursor = db.cursor()
 
     cursor.execute(
-        "INSERT INTO flights(airlines_id, flight_types_id, flight_classes_id, origin, destination, source_airport, destination_airport, aprox_duration) VALUES(%(airlines_id)s, %(flight_types_id)s, %(flight_classes_id)s, %(origin)s, %(destination)s, %(source_airport)s, %(destination_airport)s, %(aprox_duration)s)",
+        "INSERT INTO flights(airlines_id, flight_types_id, flight_classes_id, origin, destination, source_airport, destination_airport, aprox_duration, ticket_price) VALUES(%(airlines_id)s, %(flight_types_id)s, %(flight_classes_id)s, %(origin)s, %(destination)s, %(source_airport)s, %(destination_airport)s, %(aprox_duration)s, %(ticket_price)s)",
         request.json,
     )
 
@@ -327,7 +329,7 @@ def edit_flight(flight_id):
 
     request.json["id"] = flight_id
     cursor.execute(
-        "UPDATE flights SET airlines_id = %(airlines_id)s, flight_types = %(flight_types)s, flight_classes_id = %(flight_classes_id)s, origin = %(origin)s, destination = %(destination)s, source_airport = %(source_airport)s, destination_airport = %(destination_airport)s, aprox_duration = %(aprox_duration)s WHERE id = %(id)s",
+        "UPDATE flights SET airlines_id = %(airlines_id)s, flight_types_id = %(flight_types_id)s, flight_classes_id = %(flight_classes_id)s, origin = %(origin)s, destination = %(destination)s, source_airport = %(source_airport)s, destination_airport = %(destination_airport)s, aprox_duration = %(aprox_duration)s, ticket_price = %(ticket_price)s WHERE id = %(id)s",
         request.json,
     )
     db.commit()
@@ -344,7 +346,6 @@ def delete_flight(flight_id):
     cursor.close()
 
     return "", 204
-
 
 
 if __name__ == "__main__":
