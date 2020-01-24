@@ -1,0 +1,124 @@
+<div class="alert alert-info text-center position-absolute" role="alert">
+    Tip: <strong>Don't rush!</strong> Double check, so that you don't need to edit later!
+</div>
+<div class="row">
+    <div class="col-12 mx-auto">
+        <p class="lead text-right">
+            Fill in the form below to add a new flight to the system.
+        </p>
+        <div>
+            <form ng-submit="afctrl.save()" class="shadow p-3 mb-5 bg-white rounded">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="airlines">Airlines</label>
+                        <select
+                            class="form-control"
+                            id="airlines"
+                            name="airlines"
+                            ng-model="afctrl.newFlight.airlines_id"
+                            ng-options="airline.id as airline.name for airline in afctrl.airlines"
+                            required
+                        >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="flightType">Flight Type</label>
+                        <select
+                            class="form-control"
+                            id="flightType"
+                            name="flightType"
+                            ng-model="afctrl.newFlight.flight_types_id"
+                            ng-options="type.id as type.type for type in afctrl.flightTypes"
+                            required
+                        >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="flightClass">Class</label>
+                        <select
+                            class="form-control"
+                            id="flightClass"
+                            name="flightClass"
+                            ng-model="afctrl.newFlight.flight_classes_id"
+                            ng-options="flight_class.id as flight_class.class for flight_class in afctrl.flightClasses"
+                            required
+                        >
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="flightOrigin">Flight Origin</label>
+                        <select
+                            class="form-control"
+                            id="flightOrigin"
+                            name="flightOrigin"
+                            ng-model="afctrl.newFlight.origin"
+                            ng-options="origin.id as origin.name for origin in afctrl.cities"
+                            required
+                        >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="flightDestination">Flight Destination</label>
+                        <select
+                            class="form-control"
+                            id="flightDestination"
+                            name="flightDestination"
+                            ng-model="afctrl.newFlight.destination"
+                            ng-options="destination.id as destination.name for destination in afctrl.cities"
+                            required
+                        >
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="originAirport">Origin Airport</label>
+                        <select
+                            class="form-control"
+                            id="originAirport"
+                            name="originAirport"
+                            ng-model="afctrl.newFlight.source_airport"
+                            ng-options="airport.id as airport.name for airport in afctrl.airports"
+                            required
+                        >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="destinationAirport">Destination Airport</label>
+                        <select
+                            class="form-control"
+                            id="destinationAirport"
+                            name="destinationAirport"
+                            ng-model="afctrl.newFlight.destination_airport"
+                            ng-options="airport.id as airport.name for airport in afctrl.airports"
+                            required
+                        >
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="aproxDuration">Approximate Flight Duration (in minutes)</label>
+                        <input
+                            class="form-control"
+                            ng-model="afctrl.newFlight.aprox_duration"
+                            type="number"
+                            min="0"
+                            step="5"
+                            required
+                        />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
