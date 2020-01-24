@@ -102,3 +102,48 @@
         </tr>
     </tbody>
 </table>
+
+<hr class="my-4" />
+
+<table class="table table-hover text-center shadow p-3 rounded">
+    <h4 class="text-left lead">Flights</h4>
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Airline (ID)</th>
+            <th>Flight Type</th>
+            <th>Flight Class</th>
+            <th>Origin (ID)</th>
+            <th>Destination (ID)</th>
+            <th>Origin Airport (ID)</th>
+            <th>Destination Airport (ID)</th>
+            <th>Approximate Flight Duration</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="flight in ahctrl.flights">
+            <td>
+                <a class="edit-link" ui-sref="dashboard.edit_flight({id: flight['id']})"
+                    >{{ flight.id }}</a
+                >
+            </td>
+            <td>{{ flight.airlines_id }}</td>
+            <td ng-if="flight.flight_types_id == 1">One-Way</td>
+            <td ng-if="flight.flight_types_id == 2">Round Trip</td>
+            <td ng-if="flight.flight_classes_id == 1">First Class</td>
+            <td ng-if="flight.flight_classes_id == 2">Economy Class</td>
+            <td ng-if="flight.flight_classes_id == 3">Business Class</td>
+            <td>{{ flight.origin }}</td>
+            <td>{{ flight.destination }}</td>
+            <td>{{ flight.source_airport }}</td>
+            <td>{{ flight.destination_airport }}</td>
+            <td>{{ (flight.aprox_duration / 60).toFixed(2) }} hours</td>
+            <td>
+                <button class="btn btn-danger" ng-click="ahctrl.deleteFlight( flight.id )">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -10,6 +10,7 @@
 
             this.users = [];
             this.accommodations = [];
+            this.flights = [];
 
             $scope.today = new Date();
             let tick = function() {
@@ -69,8 +70,33 @@
                 );
             };
 
+            this.getAllFlights = function() {
+                $http.get("api/flights").then(
+                    function(response) {
+                        console.log(response);
+                        that.flights = response.data;
+                    },
+                    function(reason) {
+                        console.log(reason);
+                    }
+                );
+            };
+
+            this.deleteFlight = function(id) {
+                $http.delete("/api/flights/" + id).then(
+                    function(response) {
+                        console.log(response);
+                        that.getAllFlights();
+                    },
+                    function(reason) {
+                        console.log(reason);
+                    }
+                );
+            };
+
             this.getAllUsers();
             this.getAllAccommodations();
+            this.getAllFlights();
         }
     ]);
 })(angular);
