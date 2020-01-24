@@ -241,5 +241,111 @@ def delete_accommodation(accommodation_id):
     return "", 204
 
 
+@app.route("/api/airlines", methods=["GET"])
+def get_airlines():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM airlines")
+
+    airlines = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(airlines), 200
+
+
+@app.route("/api/flight/types", methods=["GET"])
+def get_flight_types():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM flight_types")
+
+    flight_types = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(flight_types), 200
+
+@app.route("/api/flights", methods=["GET"])
+def get_all_flights():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM flights")
+
+    flights = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(flights), 200
+
+
+@app.route("/api/flight/classes", methods=["GET"])
+def get_flight_classes():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM flight_classes")
+
+    flight_classes = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(flight_classes), 200
+
+
+@app.route("/api/airports", methods=["GET"])
+def get_airports():
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM airports")
+
+    airports = cursor.fetchall()
+    cursor.close()
+
+    return jsonify(airports), 200
+
+@app.route("/api/flights", methods=["POST"])
+def add_flight():
+    db = mysql.get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "INSERT INTO flights(airlines_id, flight_types_id, flight_classes_id, origin, destination, source_airport, destination_airport, aprox_duration) VALUES(%(airlines_id)s, %(flight_types_id)s, %(flight_classes_id)s, %(origin)s, %(destination)s, %(source_airport)s, %(destination_airport)s, %(aprox_duration)s)",
+        request.json,
+    )
+
+    db.commit()
+    cursor.close()
+
+    return jsonify(request.json), 201
+
+
+@app.route("/api/flights/<int:flight_id>", methods=["GET"])
+def get_flight(flight_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM flights WHERE id = %s", (flight_id,))
+
+    flight = cursor.fetchone()
+
+    return jsonify(flight)
+
+
+@app.route("/api/flights/edit/<int:flight_id>", methods=["PUT"])
+def edit_flight(flight_id):
+    db = mysql.get_db()
+    cursor = db.cursor()
+
+    request.json["id"] = flight_id
+    cursor.execute(
+        "UPDATE flights SET airlines_id = %(airlines_id)s, flight_types = %(flight_types)s, flight_classes_id = %(flight_classes_id)s, origin = %(origin)s, destination = %(destination)s, source_airport = %(source_airport)s, destination_airport = %(destination_airport)s, aprox_duration = %(aprox_duration)s WHERE id = %(id)s",
+        request.json,
+    )
+    db.commit()
+
+    return "", 200
+
+
+@app.route("/api/flights/<int:flight_id>", methods=["DELETE"])
+def delete_flight(flight_id):
+    db = mysql.get_db()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM flights WHERE id = %s", (flight_id,))
+    db.commit()
+    cursor.close()
+
+    return "", 204
+
+
+
 if __name__ == "__main__":
     app.run("0.0.0.0", 5000, threaded=True)
