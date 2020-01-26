@@ -1,5 +1,5 @@
 (function(angular) {
-    let app = angular.module("app", ["ui.router", "ui.bootstrap", "ngCookies"]);
+    let app = angular.module("app", ["ui.router", "ui.bootstrap", "ngCookies", "ngFileUpload"]);
 
     app.config([
         "$stateProvider",
