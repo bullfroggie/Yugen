@@ -70,6 +70,14 @@ a:focus {
     display: block;
 }
 
+a:active,
+a:focus {
+    outline: 0;
+    border: none;
+    outline-style: none;
+    -moz-outline-style: none;
+}
+
 #sidebar ul li a:hover {
     color: white !important;
     background: #000026;
