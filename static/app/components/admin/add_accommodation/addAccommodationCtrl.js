@@ -5,11 +5,16 @@
         "$http",
         "$state",
         "$stateParams",
-        function($http, $state, $stateParams) {
+        "$scope",
+        "$timeout",
+        "Upload",
+        function($http, $state, $stateParams, $scope, $timeout, Upload) {
             let that = this;
 
             this.cities = [];
             this.accommodationTypes = [];
+
+            this.editCheck = false;
 
             this.newAccommodation = {
                 accommodation_types_id: 1,
@@ -20,8 +25,41 @@
                 street_address: "",
                 description: "",
                 breakfast: 0,
-                internet: 0
+                internet: 0,
+                images: []
             };
+
+            /*
+            Image Upload
+            */
+            // $scope.uploadFiles = function(files) {
+            //     $scope.files = files;
+            //     if (files && files.length) {
+            //         Upload.upload({
+            //             url: "",
+            //             data: {
+            //                 files: files
+            //             }
+            //         }).then(
+            //             function(response) {
+            //                 $timeout(function() {
+            //                     $scope.result = response.data;
+            //                 });
+            //             },
+            //             function(response) {
+            //                 if (response.status > 0) {
+            //                     $scope.errorMsg = response.status + ": " + response.data;
+            //                 }
+            //             },
+            //             function(evt) {
+            //                 $scope.progress = Math.min(
+            //                     100,
+            //                     parseInt((100.0 * evt.loaded) / evt.total)
+            //                 );
+            //             }
+            //         );
+            //     }
+            // };
 
             this.getCities = function() {
                 $http.get("/api/cities").then(
@@ -88,11 +126,15 @@
                     that.editAccommodation($stateParams["id"]);
                 } else {
                     that.addAccommodation();
+                    if ($scope.form.file.$valid && $scope.file) {
+                        $scope.upload($scope.file);
+                    }
                 }
             };
 
             if ($stateParams["id"]) {
                 that.getAccommodation($stateParams["id"]);
+                that.editCheck = true;
             }
 
             this.getCities();

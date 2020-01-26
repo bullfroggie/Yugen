@@ -3,7 +3,7 @@
 </div>
 <div class="row">
     <div class="col-12 mx-auto">
-        <p class="lead text-center">
+        <p class="lead text-right">
             Fill in the form below to add a new accommodation to the system.
         </p>
         <div>
@@ -59,7 +59,9 @@
                 <div class="form-group col-md-12">
                     <label for="description">Description</label>
                     <!-- prettier-ignore -->
-                    <textarea class="form-control" placeholder="Located in Tokyo, 2.3 mi from Tokyo Tower, Shinagawa Prince Hotel East Tower features views of the city. With a bar, the 4-star hotel has air-conditioned rooms with free WiFi, each with a private bathroom. The property features a restaurant and Happoen Garden is 1.2 mi away. At the hotel, every room is fitted with a desk and a flat-screen TV. All units will provide guests with a fridge." rows="5" ng-model="aactrl.newAccommodation.description" required></textarea>
+                    <textarea class="form-control"
+                        placeholder="Located in Tokyo, 2.3 mi from Tokyo Tower, Shinagawa Prince Hotel East Tower features views of the city. With a bar, the 4-star hotel has air-conditioned rooms with free WiFi, each with a private bathroom. The property features a restaurant and Happoen Garden is 1.2 mi away. At the hotel, every room is fitted with a desk and a flat-screen TV. All units will provide guests with a fridge."
+                        rows="5" ng-model="aactrl.newAccommodation.description" required></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-2">
@@ -117,15 +119,35 @@
                             </label>
                         </div>
                     </div>
+                    <div class="form-row" ng-if="!aactrl.editCheck">
+                        <div class="col-md-6">
+                            <button
+                                class="btn btn-light"
+                                ngf-select="uploadFiles($files)"
+                                ng-model="aactrl.newAccommodation.images"
+                                multiple
+                                accept="image/*"
+                            >
+                                Select Images
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="badge">Images:</label>
+                            <ul>
+                                <li ng-repeat="f in files" style="font:smaller">
+                                    {{f.name}}
+                                </li>
+                            </ul>
+                            <span class="progress" ng-show="progress >= 0">
+                                <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                            </span>
+                            {{errorMsg}}
+                        </div>
+                    </div>
                 </div>
+                <br />
                 <button type="submit" class="btn btn-primary">Confirm</button>
             </form>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(function() {
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
