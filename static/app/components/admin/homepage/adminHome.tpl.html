@@ -117,6 +117,7 @@
             <th>Destination (ID)</th>
             <th>Origin Airport (ID)</th>
             <th>Destination Airport (ID)</th>
+            <th>Ticket Price</th>
             <th>Approximate Flight Duration</th>
             <th></th>
         </tr>
@@ -138,6 +139,7 @@
             <td>{{ flight.destination }}</td>
             <td>{{ flight.source_airport }}</td>
             <td>{{ flight.destination_airport }}</td>
+            <td>{{ flight.ticket_price.toFixed(2) }} $</td>
             <td>{{ (flight.aprox_duration / 60).toFixed(2) }} hours</td>
             <td>
                 <button class="btn btn-danger" ng-click="ahctrl.deleteFlight( flight.id )">
