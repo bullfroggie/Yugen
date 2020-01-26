@@ -2,7 +2,7 @@ from flask import Flask, request, json, jsonify, make_response
 from flask_bcrypt import Bcrypt
 from flaskext.mysql import MySQL, pymysql
 from datetime import datetime, timedelta
-from os import urandom
+import os
 import dateutil.parser
 import jwt
 
@@ -11,7 +11,7 @@ app = Flask(__name__, static_url_path="")
 app.config["MYSQL_DATABASE_USER"] = "root"
 app.config["MYSQL_DATABASE_PASSWORD"] = "toor"
 app.config["MYSQL_DATABASE_DB"] = "yugen_db"
-app.config["SECRET_KEY"] = urandom(24)
+app.config["SECRET_KEY"] = os.urandom(24)
 
 mysql = MySQL(app, cursorclass=pymysql.cursors.DictCursor)
 
