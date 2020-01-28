@@ -1,5 +1,18 @@
+<script type="text/ng-template" id="alert.html">
+    <div ng-transclude></div>
+</script>
+
+<div
+    uib-alert
+    ng-repeat="alert in alerts"
+    ng-class="'alert-' + (alert.type || 'warning')"
+    close="closeAlert($index)"
+>
+    {{ alert.msg }}
+</div>
+
 <div class="alert alert-info text-center position-absolute" role="alert">
-    Tip: <strong>Double check</strong> everything you enter!
+    Tip: <strong>Beware</strong>, you won't be able to edit images later!
 </div>
 <div class="row">
     <div class="col-12 mx-auto">
@@ -7,7 +20,12 @@
             Fill in the form below to add a new accommodation to the system.
         </p>
         <div>
-            <form ng-submit="aactrl.save()" class="shadow p-3 mb-5 bg-white rounded">
+            <form
+                ng-submit="aactrl.save()"
+                name="accommodationForm"
+                class="shadow p-3 mb-5 bg-white rounded"
+                enctype="multipart/form-data"
+            >
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="name">Name</label>
@@ -89,7 +107,18 @@
                             required
                         />
                     </div>
-                    <div class="form-group col-md-8" id="accommodation-checkbox">
+                    <div class="form-group col-md-1">
+                        <label for="available">Available:</label>
+                        <input
+                            class="form-control"
+                            ng-model="aactrl.newAccommodation.available"
+                            type="number"
+                            min="0"
+                            step="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group col-md-7" id="accommodation-checkbox">
                         <div class="form-check">
                             <input
                                 class="form-check-input"
@@ -120,33 +149,38 @@
                         </div>
                     </div>
                     <div class="form-row" ng-if="!aactrl.editCheck">
-                        <div class="col-md-6">
-                            <button
-                                class="btn btn-light"
-                                ngf-select="uploadFiles($files)"
-                                ng-model="aactrl.newAccommodation.images"
-                                multiple
+                        <div class="col-md-10 custom-file">
+                            <input
+                                type="file"
+                                ngf-select
+                                class="custom-file-input"
+                                ng-model="aactrl.images"
+                                name="file"
                                 accept="image/*"
-                            >
-                                Select Images
-                            </button>
+                                required
+                                ngf-model-invalid="errorFile"
+                                ngf-multiple="true"
+                            />
+                            <label class="custom-file-label" for="file">Select images...</label>
                         </div>
-                        <div class="col-md-6">
-                            <label class="badge">Images:</label>
+                    </div>
+                    <div class="form-row" ng-if="aactrl.images.length > 0">
+                        <div class="col-md-12">
+                            <small id="selectedImages" class="form-text text-muted">
+                                Selected Images
+                            </small>
                             <ul>
-                                <li ng-repeat="f in files" style="font:smaller">
-                                    {{f.name}}
+                                <li ng-repeat="image in aactrl.images" style="font:smaller">
+                                    {{image.name}}
                                 </li>
                             </ul>
-                            <span class="progress" ng-show="progress >= 0">
-                                <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-                            </span>
-                            {{errorMsg}}
                         </div>
                     </div>
                 </div>
                 <br />
-                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="submit" class="btn btn-primary">
+                    Confirm
+                </button>
             </form>
         </div>
     </div>

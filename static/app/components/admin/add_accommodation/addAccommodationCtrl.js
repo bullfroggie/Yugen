@@ -6,10 +6,19 @@
         "$state",
         "$stateParams",
         "$scope",
-        "$timeout",
         "Upload",
-        function($http, $state, $stateParams, $scope, $timeout, Upload) {
+        function($http, $state, $stateParams, $scope, Upload) {
             let that = this;
+
+            $scope.alerts = [];
+
+            $scope.addAlert = function(message) {
+                $scope.alerts.push(message);
+            };
+
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
 
             this.cities = [];
             this.accommodationTypes = [];
@@ -26,40 +35,33 @@
                 description: "",
                 breakfast: 0,
                 internet: 0,
-                images: []
+                available: 0
             };
+
+            this.images = null;
 
             /*
             Image Upload
             */
-            // $scope.uploadFiles = function(files) {
-            //     $scope.files = files;
-            //     if (files && files.length) {
-            //         Upload.upload({
-            //             url: "",
-            //             data: {
-            //                 files: files
-            //             }
-            //         }).then(
-            //             function(response) {
-            //                 $timeout(function() {
-            //                     $scope.result = response.data;
-            //                 });
-            //             },
-            //             function(response) {
-            //                 if (response.status > 0) {
-            //                     $scope.errorMsg = response.status + ": " + response.data;
-            //                 }
-            //             },
-            //             function(evt) {
-            //                 $scope.progress = Math.min(
-            //                     100,
-            //                     parseInt((100.0 * evt.loaded) / evt.total)
-            //                 );
-            //             }
-            //         );
-            //     }
-            // };
+            this.uploadPic = function(file) {
+                if (file) {
+                    try {
+                        Upload.upload({
+                            url: "api/accommodation/upload/" + that.newAccommodation.name,
+                            method: "POST",
+                            data: { file: file }
+                        })
+                            .then(function onSuccess(response) {
+                                console.log("Upload successful.", response);
+                            })
+                            .catch(function onError(response) {
+                                console.log("Upload failed.", response);
+                            });
+                    } catch (error) {
+                        console.log(error.message);
+                    }
+                }
+            };
 
             this.getCities = function() {
                 $http.get("/api/cities").then(
@@ -89,10 +91,17 @@
                 $http.post("/api/accommodation", that.newAccommodation).then(
                     function(response) {
                         console.log(response);
+                        that.uploadPic(that.images);
                         $state.go("dashboard.admin_home");
                     },
                     function(reason) {
                         console.log(reason);
+                        if (reason.status == 409) {
+                            $scope.addAlert({
+                                type: "danger",
+                                msg: reason.data
+                            });
+                        }
                     }
                 );
             };
@@ -126,9 +135,6 @@
                     that.editAccommodation($stateParams["id"]);
                 } else {
                     that.addAccommodation();
-                    if ($scope.form.file.$valid && $scope.file) {
-                        $scope.upload($scope.file);
-                    }
                 }
             };
 
