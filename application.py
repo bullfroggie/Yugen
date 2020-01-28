@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 from flaskext.mysql import MySQL, pymysql
 from datetime import datetime, timedelta
 import os
+import shutil
 import dateutil.parser
 import jwt
 
@@ -12,10 +13,17 @@ app.config["MYSQL_DATABASE_USER"] = "root"
 app.config["MYSQL_DATABASE_PASSWORD"] = "toor"
 app.config["MYSQL_DATABASE_DB"] = "yugen_db"
 app.config["SECRET_KEY"] = os.urandom(24)
+app.config["IMAGE_UPLOADS"] = "static/styles/images/accommodation_images/"
 
 mysql = MySQL(app, cursorclass=pymysql.cursors.DictCursor)
 
 bcrypt = Bcrypt(app)
+
+
+@app.route("/test", methods=["POST"])
+def upload_test():
+
+    return "", 201
 
 
 @app.route("/")
@@ -137,7 +145,9 @@ def get_all_users():
     token_val = jwt.decode(token, app.config.get("SECRET_KEY"))
 
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT * FROM users WHERE id != %s", (token_val["sub"],))
+    cursor.execute(
+        "SELECT * FROM users WHERE id != %s ORDER BY id DESC", (token_val["sub"],)
+    )
 
     users = cursor.fetchall()
     cursor.close()
@@ -181,7 +191,7 @@ def get_accommodation_types():
 @app.route("/api/accommodation", methods=["GET"])
 def get_all_accommodations():
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT * FROM accommodation")
+    cursor.execute("SELECT * FROM accommodation ORDER BY name ASC")
 
     accommodations = cursor.fetchall()
     cursor.close()
@@ -194,8 +204,14 @@ def add_accommodation():
     db = mysql.get_db()
     cursor = db.cursor()
 
+    cursor.execute("SELECT * FROM accommodation WHERE name = %(name)s", request.json)
+    existing_check = cursor.fetchone()
+
+    if existing_check is not None:
+        return "Accommodation with that name already exists!", 409
+
     cursor.execute(
-        "INSERT INTO accommodation(accommodation_types_id, cities_id, name, price_per_night, stars, street_address, description, breakfast, internet) VALUES(%(accommodation_types_id)s, %(cities_id)s, %(name)s, %(price_per_night)s, %(stars)s, %(street_address)s, %(description)s, %(breakfast)s, %(internet)s)",
+        "INSERT INTO accommodation(accommodation_types_id, cities_id, name, price_per_night, stars, street_address, description, breakfast, internet, available) VALUES(%(accommodation_types_id)s, %(cities_id)s, %(name)s, %(price_per_night)s, %(stars)s, %(street_address)s, %(description)s, %(breakfast)s, %(internet)s, %(available)s)",
         request.json,
     )
 
@@ -203,6 +219,19 @@ def add_accommodation():
     cursor.close()
 
     return jsonify(request.json), 201
+
+
+@app.route("/api/accommodation/upload/<hotel>", methods=["POST"])
+def upload_images(hotel):
+
+    os.mkdir(os.path.join(app.config["IMAGE_UPLOADS"], hotel))
+    images = request.files.to_dict()
+    for image in images:
+        images[image].save(
+            os.path.join(app.config["IMAGE_UPLOADS"], hotel, images[image].filename)
+        )
+
+    return "", 201
 
 
 @app.route("/api/accommodation/<int:accommodation_id>", methods=["GET"])
@@ -220,9 +249,15 @@ def edit_accommodation(accommodation_id):
     db = mysql.get_db()
     cursor = db.cursor()
 
+    cursor.execute("SELECT name FROM accommodation WHERE id = %s", (accommodation_id,))
+    prev_name = cursor.fetchone()
+
+    # rename accommodation image directory
+    os.rename(os.path.join(app.config["IMAGE_UPLOADS"], prev_name['name']), os.path.join(app.config["IMAGE_UPLOADS"], request.json['name']))
+
     request.json["id"] = accommodation_id
     cursor.execute(
-        "UPDATE accommodation SET accommodation_types_id = %(accommodation_types_id)s, cities_id = %(cities_id)s, name = %(name)s, price_per_night = %(price_per_night)s, stars = %(stars)s, street_address = %(street_address)s, description = %(description)s, breakfast = %(breakfast)s, internet = %(internet)s WHERE id = %(id)s",
+        "UPDATE accommodation SET accommodation_types_id = %(accommodation_types_id)s, cities_id = %(cities_id)s, name = %(name)s, price_per_night = %(price_per_night)s, stars = %(stars)s, street_address = %(street_address)s, description = %(description)s, breakfast = %(breakfast)s, internet = %(internet)s, available = %(available)s WHERE id = %(id)s",
         request.json,
     )
     db.commit()
@@ -234,6 +269,13 @@ def edit_accommodation(accommodation_id):
 def delete_accommodation(accommodation_id):
     db = mysql.get_db()
     cursor = db.cursor()
+
+    cursor.execute("SELECT name FROM accommodation WHERE id = %s", (accommodation_id,))
+    accommodation_name = cursor.fetchone()
+
+    # removes accommodation image directory along with all of the images
+    shutil.rmtree(os.path.join(app.config["IMAGE_UPLOADS"], accommodation_name['name']))
+
     cursor.execute("DELETE FROM accommodation WHERE id = %s", (accommodation_id,))
     db.commit()
     cursor.close()
@@ -266,7 +308,7 @@ def get_flight_types():
 @app.route("/api/flights", methods=["GET"])
 def get_all_flights():
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT * FROM flights")
+    cursor.execute("SELECT * FROM flights ORDER BY id DESC")
 
     flights = cursor.fetchall()
     cursor.close()
@@ -302,7 +344,7 @@ def add_flight():
     cursor = db.cursor()
 
     cursor.execute(
-        "INSERT INTO flights(airlines_id, flight_types_id, flight_classes_id, origin, destination, source_airport, destination_airport, aprox_duration, ticket_price) VALUES(%(airlines_id)s, %(flight_types_id)s, %(flight_classes_id)s, %(origin)s, %(destination)s, %(source_airport)s, %(destination_airport)s, %(aprox_duration)s, %(ticket_price)s)",
+        "INSERT INTO flights(airlines_id, flight_types_id, flight_classes_id, origin, destination, source_airport, destination_airport, aprox_duration, ticket_price, seats_available) VALUES(%(airlines_id)s, %(flight_types_id)s, %(flight_classes_id)s, %(origin)s, %(destination)s, %(source_airport)s, %(destination_airport)s, %(aprox_duration)s, %(ticket_price)s, %(seats_available)s)",
         request.json,
     )
 
@@ -329,7 +371,7 @@ def edit_flight(flight_id):
 
     request.json["id"] = flight_id
     cursor.execute(
-        "UPDATE flights SET airlines_id = %(airlines_id)s, flight_types_id = %(flight_types_id)s, flight_classes_id = %(flight_classes_id)s, origin = %(origin)s, destination = %(destination)s, source_airport = %(source_airport)s, destination_airport = %(destination_airport)s, aprox_duration = %(aprox_duration)s, ticket_price = %(ticket_price)s WHERE id = %(id)s",
+        "UPDATE flights SET airlines_id = %(airlines_id)s, flight_types_id = %(flight_types_id)s, flight_classes_id = %(flight_classes_id)s, origin = %(origin)s, destination = %(destination)s, source_airport = %(source_airport)s, destination_airport = %(destination_airport)s, aprox_duration = %(aprox_duration)s, ticket_price = %(ticket_price)s, seats_available = %(seats_available)s WHERE id = %(id)s",
         request.json,
     )
     db.commit()
