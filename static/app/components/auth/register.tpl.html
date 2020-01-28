@@ -63,9 +63,7 @@
                         />
                     </div>
                     <div class="form-group">
-                        <label class="badge">
-                            Username <i class="fas fa-user"></i
-                        ></label>
+                        <label class="badge"> Username <i class="fas fa-user"></i></label>
                         <input
                             type="text"
                             name="username"
@@ -78,9 +76,7 @@
                         />
                     </div>
                     <div class="form-group">
-                        <label class="badge">
-                            Password <i class="fas fa-key"></i
-                        ></label>
+                        <label class="badge"> Password <i class="fas fa-key"></i></label>
                         <input
                             type="password"
                             name="password"
@@ -91,6 +87,9 @@
                             minlength="6"
                             required
                         />
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Your password must be more than 6 characters long.
+                        </small>
                     </div>
                     <div class="form-group">
                         <label class="badge"> E-mail</label>
@@ -117,6 +116,9 @@
                             max="{{auth.maxDt}}"
                             required
                         />
+                        <small id="dateOfBirthBlock" class="form-text text-muted">
+                            You must be 18 years old or older in order to register.
+                        </small>
                     </div>
                     <div class="text-center ">
                         <button type="submit" class="btn btn-block btn-primary">
@@ -141,20 +143,14 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block g-button" ui-sref="login">
-                            <i class="fas fa-sign-in-alt"></i> Log in with an
-                            existing one
+                            <i class="fas fa-sign-in-alt"></i> Log in with an existing one
                         </button>
                     </div>
                     <p class="small mt-3">
-                        By signing up, you are indicating that you have read and
-                        agree to the
-                        <a href="#" class="ps-hero__content__link"
-                            >Terms of Use</a
-                        >
+                        By signing up, you are indicating that you have read and agree to the
+                        <a href="#" class="ps-hero__content__link">Terms of Use</a>
                         and
-                        <a href="#" onclick="alert('Privacy is a lie.')"
-                            >Privacy Policy</a
-                        >.
+                        <a href="#" onclick="alert('Privacy is a lie.')">Privacy Policy</a>.
                     </p>
                 </form>
             </div>
