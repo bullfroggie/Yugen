@@ -23,7 +23,8 @@
                 source_airport: 2359,
                 destination_airport: 2352,
                 ticket_price: 0.0,
-                aprox_duration: 0
+                aprox_duration: 0,
+                seats_available: 0
             };
 
             this.getAllAirlines = function() {
