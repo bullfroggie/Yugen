@@ -34,6 +34,8 @@
 
                         if (response.data.user_types_id == 1) {
                             $state.go("dashboard.admin_home");
+                        } else if (response.data.user_types_id == 2) {
+                            $state.go("dashboard.user_home");
                         }
                     },
                     function(reason) {
