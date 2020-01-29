@@ -138,6 +138,12 @@ a[aria-expanded="true"] {
     font-family: "Muli", sans-serif;
 }
 
+.home-card:hover {
+    -webkit-box-shadow: 10px 10px 74px -14px rgba(0, 0, 0, 0.58);
+    -moz-box-shadow: 10px 10px 74px -14px rgba(0, 0, 0, 0.58);
+    box-shadow: 10px 10px 74px -14px rgba(0, 0, 0, 0.58);
+}
+
 .send-button {
     background: #54c7c3;
     width: 100%;
