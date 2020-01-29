@@ -12,9 +12,12 @@
     </div>
 </div>
 
-<table class="table table-hover text-center shadow p-3 rounded">
+<table class="table table-hover table-bordered table-sm text-center shadow p-3 rounded">
     <h4 class="text-left lead"><strong>Users</strong></h4>
-    <thead class="thead-dark">
+    <p ng-if="ahctrl.users.length == 0" class="text-center lead">
+        There are no registered users (except you <i class="far fa-thumbs-down"></i>)
+    </p>
+    <thead ng-if="ahctrl.users.length != 0">
         <tr>
             <th>ID</th>
             <th>User Type</th>
@@ -47,13 +50,16 @@
 
 <hr class="my-4" />
 
-<table class="table table-hover text-center shadow p-3 rounded">
+<table class="table table-hover table-bordered table-sm text-center shadow p-3 rounded">
     <h4 class="text-left lead">Accommodations</h4>
     <small id="passwordHelpBlock" class="form-text text-muted">
         <strong>Grayed out</strong> means that the accommodation is unavailable
         <i class="fas fa-heart-broken"></i>
     </small>
-    <thead class="thead-dark">
+    <p ng-if="ahctrl.accommodations.length == 0" class="text-center lead">
+        There are no accommodations at this moment <i class="far fa-frown-open"></i>
+    </p>
+    <thead ng-if="ahctrl.accommodations.length != 0">
         <tr>
             <th>ID</th>
             <th>Accommodation Type</th>
@@ -114,14 +120,18 @@
 
 <hr class="my-4" />
 
-<table class="table table-hover text-center shadow p-3 rounded">
+<table class="table table-hover table-bordered table-sm text-center shadow p-3 rounded">
     <h4 class="text-left lead">Flights</h4>
     <small id="passwordHelpBlock" class="form-text text-muted">
         <strong>Grayed out</strong> means that there are no seats available on that particular
         flight
         <i class="fas fa-heart-broken"></i>
     </small>
-    <thead class="thead-dark">
+    <p ng-if="ahctrl.flights.length == 0" class="text-center lead">
+        There are no flights right now <i class="fas fa-plane-arrival"></i
+        ><i class="fas fa-fire-alt"></i>
+    </p>
+    <thead ng-if="ahctrl.flights.length != 0">
         <tr>
             <th>ID</th>
             <th>Airline (ID)</th>
@@ -132,7 +142,7 @@
             <th>Origin Airport (ID)</th>
             <th>Destination Airport (ID)</th>
             <th>Ticket Price</th>
-            <th>Approximate Flight Duration</th>
+            <th>Approx. Flight Duration</th>
             <th></th>
         </tr>
     </thead>
