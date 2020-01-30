@@ -1,0 +1,64 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>Accommodation <i class="fas fa-bed"></i></h1>
+        <p class="lead text-muted">
+            Pick a city to which you're going!
+        </p>
+        <select
+            class="form-control text-center"
+            id="city"
+            name="city"
+            ng-model="acctrl.selected"
+            ng-options="city.id as city.name for city in acctrl.cities"
+            ng-change="acctrl.getAccommodations(acctrl.selected)"
+        >
+        </select>
+    </div>
+</section>
+<small class="form-text text-center text-muted">
+    <strong>Found:</strong> {{ acctrl.accommodations.length - unavailableCounter }} accommodations
+    <i class="fas fa-route"></i>
+</small>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" ng-repeat="accommodation in acctrl.accommodations" ng-if="accommodation.available != 0">
+                <div class="card mb-4 shadow-sm">
+                    <img
+                        class="bd-placeholder-img card-img-top"
+                        width="100%"
+                        height="250"
+                        src="{{accommodation.images[0]}}"
+                        focusable="false"
+                        role="img"
+                        aria-label="Placeholder: Thumbnail"
+                    >
+                        <title>{{ accommodation.name }}</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em" class="text-center lead">{{ accommodation.name }}</text>
+                    </svg>
+                    <div class="card-body">
+                        <span
+                            uib-rating
+                            ng-model="accommodation.stars"
+                            max="5"
+                            read-only="isReadonly"
+                            class="d-flex justify-content-center"
+                        ></span>
+                        <p class="card-text contain-lines">
+                            {{ accommodation.description }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    View
+                                </button>
+                            </div>
+                            <small class="text-muted">${{ accommodation.price_per_night }} per night</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
