@@ -241,7 +241,17 @@ def get_accommodation(accommodation_id):
 
     accommodation = cursor.fetchone()
 
-    return jsonify(accommodation)
+    return jsonify(accommodation), 200
+
+
+@app.route("/api/accommodation/city/<int:city_id>", methods=["GET"])
+def get_accommodation_by_city(city_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute("SELECT * FROM accommodation WHERE cities_id = %s ORDER BY name ASC", (city_id,))
+
+    accommodations = cursor.fetchall()
+
+    return jsonify(accommodations), 200
 
 
 @app.route("/api/accommodation/edit/<int:accommodation_id>", methods=["PUT"])
@@ -253,7 +263,10 @@ def edit_accommodation(accommodation_id):
     prev_name = cursor.fetchone()
 
     # rename accommodation image directory
-    os.rename(os.path.join(app.config["IMAGE_UPLOADS"], prev_name['name']), os.path.join(app.config["IMAGE_UPLOADS"], request.json['name']))
+    os.rename(
+        os.path.join(app.config["IMAGE_UPLOADS"], prev_name["name"]),
+        os.path.join(app.config["IMAGE_UPLOADS"], request.json["name"]),
+    )
 
     request.json["id"] = accommodation_id
     cursor.execute(
@@ -274,7 +287,7 @@ def delete_accommodation(accommodation_id):
     accommodation_name = cursor.fetchone()
 
     # removes accommodation image directory along with all of the images
-    shutil.rmtree(os.path.join(app.config["IMAGE_UPLOADS"], accommodation_name['name']))
+    shutil.rmtree(os.path.join(app.config["IMAGE_UPLOADS"], accommodation_name["name"]))
 
     cursor.execute("DELETE FROM accommodation WHERE id = %s", (accommodation_id,))
     db.commit()
@@ -388,6 +401,24 @@ def delete_flight(flight_id):
     cursor.close()
 
     return "", 204
+
+
+@app.route("/api/accommodation/images", methods=["GET"])
+def get_images():
+    listed = []
+
+    with os.scandir(app.config["IMAGE_UPLOADS"]) as entries:
+        for entry in entries:
+            if entry.is_dir():
+                with os.scandir(
+                    os.path.join(app.config["IMAGE_UPLOADS"], entry.name)
+                ) as sub:
+                    for sub_entry in sub:
+                        corrected_path = sub_entry.path[7:]
+                        entry_dict = {"name": entry.name, "path": corrected_path}
+                        listed.append(entry_dict)
+
+    return jsonify(listed), 200
 
 
 if __name__ == "__main__":
