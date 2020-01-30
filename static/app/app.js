@@ -61,6 +61,18 @@
                     templateUrl: "app/components/admin/add_flight/flightForm.tpl.html",
                     controller: "AddFlightCtrl",
                     controllerAs: "afctrl"
+                })
+                .state("dashboard.user_home", {
+                    url: "/",
+                    templateUrl: "app/components/regular_user/homepage/homepage.tpl.html",
+                    controller: "UserHomeCtrl",
+                    controllerAs: "uhctrl"
+                })
+                .state("dashboard.accommodation", {
+                    url: "/accommodation",
+                    templateUrl: "app/components/regular_user/accommodation/accommodation.tpl.html",
+                    controller: "AccommodationCtrl",
+                    controllerAs: "acctrl"
                 });
 
             $urlRouterProvider.otherwise("/dashboard");
