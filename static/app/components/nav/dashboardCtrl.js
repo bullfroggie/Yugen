@@ -16,8 +16,7 @@
                 id: null,
                 user_types_id: null,
                 first_name: "",
-                last_name: "",
-                profile_image: ""
+                last_name: ""
             };
 
             this.getUser = function() {
@@ -28,8 +27,7 @@
                             id: response.data.id,
                             user_types_id: response.data.user_types_id,
                             first_name: response.data.first_name,
-                            last_name: response.data.last_name,
-                            profile_image: response.data.profile_image
+                            last_name: response.data.last_name
                         };
 
                         if (response.data.user_types_id == 1) {

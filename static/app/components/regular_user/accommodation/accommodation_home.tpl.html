@@ -1,0 +1,64 @@
+<section class="jumbotron text-center shadow">
+    <div class="container">
+        <h1>Accommodation <i class="fas fa-bed"></i></h1>
+        <p class="lead text-muted">
+            Where are you going?
+        </p>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="btn btn-dark" type="button" id="search"><i class="fas fa-search"></i> Search</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Enter city" ng-change="acctrl.getAccommodations()"
+                ng-model="acctrl.searched" aria-label="Press button to search" aria-describedby="search">
+        </div>
+        <hr ng-if="acctrl.accommodations.length > 0">
+        <small ng-if="acctrl.accommodations.length > 0" class="form-text text-center text-muted" ng-if="acctrl.searched != '' && acctrl.searched != null">
+            You can filter the results by accommodation star rating
+            <i class="fas fa-star-half-alt"></i>
+        </small>
+        <span ng-if="acctrl.accommodations.length > 0" ng-change="acctrl.filterByStars()" uib-rating ng-model="acctrl.stars" max="5" state-on="'glyphicon-ok-sign'"
+            state-off="'glyphicon-ok-circle'" aria-labelledby="custom-icons-1"></span>
+        <span ng-if="acctrl.accommodations.length > 0"> or </span>
+        <button ng-if="acctrl.accommodations.length > 0" class="btn btn-outline-dark" ng-click="acctrl.getAccommodations()">Show all</button>
+    </div>
+</section>
+<small class="form-text text-center text-muted" ng-if="acctrl.searched != '' && acctrl.searched != null">
+    <strong>Found:</strong> {{ acctrl.accommodations.length - unavailableCounter }} accommodations in
+    {{ acctrl.searched }}
+    <i class="fas fa-route"></i>
+</small>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" ng-repeat="accommodation in acctrl.accommodations"
+                ng-if="accommodation.available != 0">
+                <div class="card mb-4 shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="250"
+                        src="{{accommodation.images[0]}}" focusable="false" role="img"
+                        aria-label="Placeholder: Thumbnail">
+                    <title>{{ accommodation.name }}</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em"
+                        class="text-center lead">{{ accommodation.name }}</text>
+                    </svg>
+                    <div class="card-body">
+                        <span uib-rating ng-model="accommodation.stars" max="5" read-only="isReadonly"
+                            class="d-flex justify-content-center"></span>
+                        <p class="card-text contain-lines">
+                            {{ accommodation.description }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a type="button" ui-sref="dashboard.details({ id: accommodation.id })" class="btn btn-sm btn-outline-secondary">
+                                    View
+                                </a>
+                            </div>
+                            <small class="text-muted">${{ accommodation.price_per_night }} per night</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

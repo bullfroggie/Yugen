@@ -1,0 +1,105 @@
+<table class="table table-hover table-sm text-center shadow p-3 rounded">
+    <h4 class="text-left lead">Purchased Flight Tickets</h4>
+    <p ng-if="ratctrl.tickets.length == 0" class="text-center lead">
+        You didn't purchase any tickets, yet <i class="fas fa-plane-arrival"></i
+        ><i class="fas fa-fire-alt"></i>
+    </p>
+    <thead class="thead-bg" ng-if="ratctrl.tickets.length != 0">
+        <tr>
+            <th>Airline</th>
+            <th>Type</th>
+            <th>Class</th>
+            <th>From City</th>
+            <th>To City</th>
+            <th>From Airport</th>
+            <th>To Airport</th>
+            <th>Ticket Price</th>
+            <th>Approx. Flight Duration</th>
+            <th>Boarding Date/Time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            ng-repeat="ticket in ratctrl.tickets"
+        >
+            </td>
+            <td>{{ ticket.name }}</td>
+            <td>{{ ticket.type }}</td>
+            <td>{{ ticket.class }}</td>
+            <td>{{ ticket["origin.name"] }}</td>
+            <td>{{ ticket["destination.name"] }}</td>
+            <td>{{ ticket["source_airport.name"] }}</td>
+            <td>{{ ticket["dest_airport.name"] }}</td>
+            <td>${{ ticket.ticket_price.toFixed(2) }}</td>
+            <td>{{ (ticket.aprox_duration / 60).toFixed(1) }} hours</td>
+            <td>{{ ticket.flight_datetime }}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="ratctrl.deleteTicket( ticket.flights_id,  ticket.id )">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr class="my-4" />
+
+<table class="table table-hover table-sm text-center shadow p-3 rounded">
+    <h4 class="text-left lead">Reservations</h4>
+    <p ng-if="ratctrl.reservations.length == 0" class="text-center lead">
+        You didn't make any reservations <i class="far fa-frown-open"></i>
+    </p>
+    <thead class="thead-bg" ng-if="ratctrl.reservations.length != 0">
+        <tr>
+            <th>Accommodation Type</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stars</th>
+            <th>Breakfast</th>
+            <th>Internet</th>
+            <th>Starts</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            ng-repeat="reservation in ratctrl.reservations"
+        >
+            <td>{{ reservation.type }}</td>
+            <td>{{ reservation["cities.name"] }}</td>
+            <td>{{ reservation.street_address }}</td>
+            <td>{{ reservation.name }}</td>
+            <td>${{ reservation.total_price }}</td>
+            <td>
+                <span
+                    uib-rating
+                    ng-model="reservation.stars"
+                    max="5"
+                    read-only="isReadonly"
+                ></span>
+            </td>
+            <td ng-if="reservation.breakfast == 1">Yes</td>
+            <td ng-if="reservation.breakfast == 0">No</td>
+            <td ng-if="reservation.internet == 1">Yes</td>
+            <td ng-if="reservation.internet == 0">No</td>
+            <td>{{ reservation.date }}</td>
+            <td>
+                <a class="btn btn-info" id="jump" ui-sref="dashboard.details({ id: reservation.accommodation_id })">
+                    View
+                </a>
+            </td>
+            <td>
+                <button
+                    class="btn btn-danger"
+                    ng-click="ratctrl.deleteReservation( reservation.accommodation_id, reservation.id )"
+                >
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

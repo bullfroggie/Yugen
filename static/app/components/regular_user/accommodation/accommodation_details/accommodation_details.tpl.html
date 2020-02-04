@@ -1,0 +1,117 @@
+<div>
+    <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+        <div uib-slide ng-repeat="image in dctrl.filteredImages track by $index" index="$index">
+            <img
+                class="rounded shadow"
+                width="80%"
+                height="500px"
+                ng-src="{{image}}"
+                style="margin:auto;"
+            />
+            <div class="carousel-caption">
+                <h4>{{ dctrl.selectedAccommodation.name }}</h4>
+                <span
+                    uib-rating
+                    ng-model="dctrl.selectedAccommodation.stars"
+                    max="5"
+                    read-only="isReadonly"
+                    class="d-flex justify-content-center"
+                ></span>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6 offset-sm-2">
+        <h4 class="lead">Description:</h4>
+        <p>
+            {{ dctrl.selectedAccommodation.description }}
+        </p>
+    </div>
+    <div class="col-md-4 text-left border border-dark border-top-0 border-right-0 border-bottom-0">
+        <label>Internet</label>
+        <span ng-if="dctrl.selectedAccommodation.internet">
+            <i class="fas fa-check-circle"></i
+        ></span>
+        <span ng-if="!dctrl.selectedAccommodation.internet">
+            <i class="fas fa-times-circle"></i
+        ></span>
+        <br />
+        <label>Breakfast</label>
+        <span ng-if="dctrl.selectedAccommodation.breakfast">
+            <i class="fas fa-check-circle"></i
+        ></span>
+        <span ng-if="!dctrl.selectedAccommodation.breakfast">
+            <i class="fas fa-times-circle"></i
+        ></span>
+        <br />
+        <span class="lead border border-dark p-2 rounded shadow"
+            ><strong>
+                ${{ dctrl.selectedAccommodation.price_per_night }}/night
+            </strong></span
+        ><br /><br />
+        <div class="text-left">
+            <h5 class="lead">Address:</h5>
+            <p>
+                {{ dctrl.selectedAccommodation.street_address }}
+            </p>
+        </div>
+        <hr />
+        <div class="text-left">
+            <h5 class="lead">Accommodation Type:</h5>
+            <p ng-if="dctrl.selectedAccommodation.accommodation_types_id == 1">Hotel</p>
+            <p ng-if="dctrl.selectedAccommodation.accommodation_types_id == 2">Apartment</p>
+            <p ng-if="dctrl.selectedAccommodation.accommodation_types_id == 3">Motel</p>
+        </div>
+    </div>
+</div>
+<br />
+<div
+    ng-if="dctrl.selectedAccommodation.available != 0"
+    class="card text-center mx-auto shadow rounded"
+    style="width: 600px;"
+>
+    <div class="card-header">Make a Reservation <i class="far fa-calendar-check"></i></div>
+    <div class="card-body">
+        <form ng-submit="dctrl.makeReservation()" name="reservation">
+            <h5 class="card-title">
+                <div class="form-row mx-auto" style="width: 400px;">
+                    <div class="form-group col-md-6">
+                        <label for="name">Nights</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="nights"
+                            ng-change="dctrl.calculateTotal()"
+                            min="1"
+                            step="1"
+                            width="50px"
+                            ng-model="dctrl.newReservation.nights"
+                            placeholder="How long?"
+                            required
+                        />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Date</label>
+                        <input
+                            class="form-control"
+                            type="date"
+                            ng-model="dctrl.newReservation.date"
+                            min="{{dt | date:'yyyy-MM-dd'}}"
+                            required
+                        />
+                    </div>
+                </div>
+            </h5>
+            <p class="card-text">
+                <span class="lead">Total: $ {{ dctrl.newReservation.total_price }}</span><br />
+                <button class="btn btn-primary">Make Reservation</button>
+            </p>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+        Reservation starting from: {{ dctrl.newReservation.date | date: 'dd-MM-yyyy' }}
+        <i class="fas fa-calendar-day"></i>
+    </div>
+</div>

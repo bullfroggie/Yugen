@@ -17,7 +17,7 @@
     <p ng-if="ahctrl.users.length == 0" class="text-center lead">
         There are no registered users (except you <i class="far fa-thumbs-down"></i>)
     </p>
-    <thead ng-if="ahctrl.users.length != 0">
+    <thead class="thead-bg" ng-if="ahctrl.users.length != 0">
         <tr>
             <th>ID</th>
             <th>User Type</th>
@@ -59,11 +59,11 @@
     <p ng-if="ahctrl.accommodations.length == 0" class="text-center lead">
         There are no accommodations at this moment <i class="far fa-frown-open"></i>
     </p>
-    <thead ng-if="ahctrl.accommodations.length != 0">
+    <thead class="thead-bg" ng-if="ahctrl.accommodations.length != 0">
         <tr>
             <th>ID</th>
             <th>Accommodation Type</th>
-            <th>City (ID)</th>
+            <th>City</th>
             <th>Address</th>
             <th>Name</th>
             <th>Price</th>
@@ -80,10 +80,8 @@
             ng-class="{unavailable: accommodation.available == 0}"
         >
             <td>{{ accommodation.id }}</td>
-            <td ng-if="accommodation.accommodation_types_id == 1">Hotel</td>
-            <td ng-if="accommodation.accommodation_types_id == 2">Apartment</td>
-            <td ng-if="accommodation.accommodation_types_id == 3">Motel</td>
-            <td>{{ accommodation.cities_id }}</td>
+            <td>{{ accommodation.type }}</td>
+            <td>{{ accommodation["cities.name"] }}</td>
             <td>{{ accommodation.street_address }}</td>
             <td>
                 <a
@@ -131,18 +129,20 @@
         There are no flights right now <i class="fas fa-plane-arrival"></i
         ><i class="fas fa-fire-alt"></i>
     </p>
-    <thead ng-if="ahctrl.flights.length != 0">
+    <thead class="thead-bg" ng-if="ahctrl.flights.length != 0">
         <tr>
             <th>ID</th>
-            <th>Airline (ID)</th>
-            <th>Flight Type</th>
-            <th>Flight Class</th>
-            <th>Origin (ID)</th>
-            <th>Destination (ID)</th>
-            <th>Origin Airport (ID)</th>
-            <th>Destination Airport (ID)</th>
+            <th>Airline</th>
+            <th>Type</th>
+            <th>Class</th>
+            <th>Origin City</th>
+            <th>Destination City</th>
+            <th>Origin Airport</th>
+            <th>Destination Airport</th>
             <th>Ticket Price</th>
             <th>Approx. Flight Duration</th>
+            <th>Flight Date/Time</th>
+            <th>Seats Available</th>
             <th></th>
         </tr>
     </thead>
@@ -156,18 +156,17 @@
                     >{{ flight.id }}</a
                 >
             </td>
-            <td>{{ flight.airlines_id }}</td>
-            <td ng-if="flight.flight_types_id == 1">One-Way</td>
-            <td ng-if="flight.flight_types_id == 2">Round Trip</td>
-            <td ng-if="flight.flight_classes_id == 1">First Class</td>
-            <td ng-if="flight.flight_classes_id == 2">Economy Class</td>
-            <td ng-if="flight.flight_classes_id == 3">Business Class</td>
-            <td>{{ flight.origin }}</td>
-            <td>{{ flight.destination }}</td>
-            <td>{{ flight.source_airport }}</td>
-            <td>{{ flight.destination_airport }}</td>
+            <td>{{ flight.name }}</td>
+            <td>{{ flight.type }}</td>
+            <td>{{ flight.class }}</td>
+            <td>{{ flight["origin.name"] }}</td>
+            <td>{{ flight["destination.name"] }}</td>
+            <td>{{ flight["source_airport.name"] }}</td>
+            <td>{{ flight["dest_airport.name"] }}</td>
             <td>${{ flight.ticket_price.toFixed(2) }}</td>
             <td>{{ (flight.aprox_duration / 60).toFixed(1) }} hours</td>
+            <td>{{ flight.flight_datetime }}</td>
+            <td>{{ flight.seats_available }}</td>
             <td>
                 <button class="btn btn-danger" ng-click="ahctrl.deleteFlight( flight.id )">
                     Delete

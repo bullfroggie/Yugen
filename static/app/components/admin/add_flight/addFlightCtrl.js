@@ -12,20 +12,29 @@
             this.flightTypes = [];
             this.flightClasses = [];
             this.airports = [];
-            this.cities = [];
+            this.originCities = [];
+            this.destinationCities = [];
+            this.countries = [];
+
+            let tempDt = new Date();
+            this.minDt = tempDt.toISOString(0, 16);
 
             this.newFlight = {
-                airlines_id: 44,
+                airlines_id: 1,
                 flight_types_id: 1,
                 flight_classes_id: 1,
-                origin: 1392685764,
-                destination: 1392172935,
+                origin: null,
+                destination: null,
                 source_airport: 2359,
                 destination_airport: 2352,
                 ticket_price: 0.0,
                 aprox_duration: 0,
-                seats_available: 0
+                seats_available: 0,
+                flight_datetime: ""
             };
+
+            this.originCountry = 688;
+            this.destinationCountry = 392;
 
             this.getAllAirlines = function() {
                 $http.get("api/airlines").then(
@@ -75,18 +84,6 @@
                 );
             };
 
-            this.getCities = function() {
-                $http.get("/api/cities").then(
-                    function(response) {
-                        console.log(response);
-                        that.cities = response.data;
-                    },
-                    function(reason) {
-                        console.log(reason);
-                    }
-                );
-            };
-
             this.addFlight = function() {
                 $http.post("api/flights", that.newFlight).then(
                     function(response) {
@@ -104,6 +101,45 @@
                     function(response) {
                         console.log(response);
                         that.newFlight = response.data;
+                        that.newFlight.flight_datetime = new Date(response.data["flight_datetime"]);
+                    },
+                    function(reason) {
+                        console.log(reason);
+                    }
+                );
+            };
+
+            this.getCountries = function() {
+                $http.get("api/countries").then(
+                    function(response) {
+                        console.log(response);
+                        that.countries = response.data;
+                    },
+                    function(reason) {
+                        console.log(reason);
+                    }
+                );
+            };
+
+            this.getOriginCities = function() {
+                $http.get("api/cities/filter/" + that.originCountry).then(
+                    function(response) {
+                        console.log(response);
+                        that.originCities = response.data;
+                        that.newFlight.origin = response.data[0].id;
+                    },
+                    function(reason) {
+                        console.log(reason);
+                    }
+                );
+            };
+
+            this.getDestinationCities = function() {
+                $http.get("api/cities/filter/" + that.destinationCountry).then(
+                    function(response) {
+                        console.log(response);
+                        that.destinationCities = response.data;
+                        that.newFlight.destination = response.data[0].id;
                     },
                     function(reason) {
                         console.log(reason);
@@ -139,7 +175,9 @@
             this.getFlightTypes();
             this.getFlightClasses();
             this.getAllAirports();
-            this.getCities();
+            this.getCountries();
+            this.getOriginCities();
+            this.getDestinationCities();
         }
     ]);
 })(angular);

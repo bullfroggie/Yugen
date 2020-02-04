@@ -38,16 +38,8 @@
 
         <!-- Dashboard for regular users -->
         <ul class="nav flex-column mb-0 list-unstyled components" ng-if="dctrl.loggedIn.user_types_id == 2">
-            <p id="welcome">
-                Welcome {{dctrl.loggedIn.first_name}}
-                <span>
-                    <img
-                        src="{{dctrl.loggedIn.profile_image}}"
-                        alt="Profile Image"
-                        width="50"
-                        class="mr-3 rounded-circle img-thumbnail shadow-sm"
-                    />
-                </span>
+            <p id="welcome" class="lead">
+                <strong>Welcome {{dctrl.loggedIn.first_name}}</strong>
             </p>
             <li class="nav-item active" ui-sref-active="active">
                 <a class="nav-link" ui-sref="dashboard.user_home"><i class="fas fa-home"></i> Home</a>
@@ -56,10 +48,10 @@
                 <a class="nav-link" ui-sref="dashboard.accommodation"><i class="fas fa-bed"></i> Accommodation</a>
             </li>
             <li class="nav-item" ui-sref-active="active">
-                <a class="nav-link"><i class="fas fa-plane"></i> Flights</a>
+                <a class="nav-link" ui-sref="dashboard.flights"><i class="fas fa-plane"></i> Flights</a>
             </li>
             <li class="nav-item" ui-sref-active="active">
-                <a class="nav-link"><i class="fas fa-suitcase-rolling"></i> Reservations / Tickets</a>
+                <a class="nav-link" ui-sref="dashboard.reservations_and_tickets"><i class="fas fa-suitcase-rolling"></i> Reservations / Tickets</a>
             </li>
             <hr class="my-4" />
             <li class="nav-item" ui-sref-active="active">

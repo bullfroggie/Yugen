@@ -48,26 +48,53 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="flightOrigin">Flight Origin</label>
+                        <label for="originCountry">Origin Country</label>
                         <select
                             class="form-control"
-                            id="flightOrigin"
-                            name="flightOrigin"
-                            ng-model="afctrl.newFlight.origin"
-                            ng-options="origin.id as origin.name for origin in afctrl.cities"
-                            ng-change="afctrl.getFilteredCities()"
+                            id="countryOrigin"
+                            name="countryOrigin"
+                            ng-model="afctrl.originCountry"
+                            ng-options="country.id as country.name for country in afctrl.countries"
+                            ng-change="afctrl.getOriginCities()"
                             required
                         >
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="flightDestination">Flight Destination</label>
+                        <label for="destinationCountry">Destination Country</label>
+                        <select
+                            class="form-control"
+                            id="destinationCountry"
+                            name="destinationCountry"
+                            ng-model="afctrl.destinationCountry"
+                            ng-options="country.id as country.name for country in afctrl.countries"
+                            ng-change="afctrl.getDestinationCities()"
+                            required
+                        >
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="flightOrigin">Flight Origin (city)</label>
+                        <select
+                            class="form-control"
+                            id="flightOrigin"
+                            name="flightOrigin"
+                            ng-model="afctrl.newFlight.origin"
+                            ng-options="origin.id as origin.name for origin in afctrl.originCities"
+                            required
+                        >
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="flightDestination">Flight Destination (city)</label>
                         <select
                             class="form-control"
                             id="flightDestination"
                             name="flightDestination"
                             ng-model="afctrl.newFlight.destination"
-                            ng-options="destination.id as destination.name for destination in afctrl.cities"
+                            ng-options="destination.id as destination.name for destination in afctrl.destinationCities"
                             required
                         >
                         </select>
@@ -137,6 +164,17 @@
                             type="number"
                             min="0"
                             step="1"
+                            required
+                        />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="flightDate">Flight Date</label>
+                        <input
+                            class="form-control"
+                            type="datetime-local"
+                            name="flightDate"
+                            min="afctrl.minDt"
+                            ng-model="afctrl.newFlight.flight_datetime"
                             required
                         />
                     </div>

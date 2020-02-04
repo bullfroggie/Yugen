@@ -1,0 +1,87 @@
+<section class="jumbotron bg-dark text-center shadow">
+    <div class="container">
+        <h1 class="text-light">
+            On the lookout for a <strong>Flight Ticket</strong>, maybe?
+            <i class="fas fa-ticket-alt"></i>
+        </h1>
+        <p class="lead text-light">
+            We got you.
+        </p>
+        <div class="row text-center mx-md-n5">
+            <div class="input-group col px-md-5">
+                <input
+                    type="text"
+                    class="form-control text-center"
+                    ng-change="fctrl.searchFlight()"
+                    ng-model="fctrl.from"
+                    placeholder="Flying From..."
+                />
+            </div>
+            <div class="input-group col px-md-5">
+                <input
+                    type="text"
+                    class="form-control text-center"
+                    placeholder="Flying To..."
+                    ng-change="fctrl.searchFlight()"
+                    ng-model="fctrl.to"
+                />
+            </div>
+        </div>
+        <br />
+        <div>
+            <button ng-click="fctrl.getFlights()" class="btn btn-outline-light">Show All</button>
+        </div>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div
+                class="col-md-4 mb-5"
+                ng-repeat="flight in fctrl.flights"
+                ng-if="flight.seats_available != 0"
+            >
+                <div class="card shadow rounded" style="width: 19rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ flight["origin.name"] }}
+                            <i class="fas fa-arrow-alt-circle-right"></i>
+                            {{flight["destination.name"]}}
+                        </h5>
+                        <p class="card-text">
+                            {{ flight.class }}
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <sup class="badge">From:</sup><br />
+                            {{ flight["origin.name"] }} ({{ flight["source_airport.name"] }})
+                        </li>
+                        <li class="list-group-item">
+                            <sup class="badge">To:</sup><br />
+                            {{ flight["destination.name"] }} ({{ flight["dest_airport.name"] }})
+                        </li>
+                        <li class="list-group-item">
+                            <sup class="badge">Flight Type:</sup><br />
+                            {{ flight.type }}
+                        </li>
+                        <li class="list-group-item">
+                            <sup class="badge">Boarding Date and Time</sup><br />{{
+                            flight.flight_datetime }}
+                        </li>
+                        <li class="list-group-item">
+                            <sup class="badge">Ticket Price</sup><br />
+                            <strong>${{ flight.ticket_price }}</strong>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <button ng-click="fctrl.purchaseTicket(flight.id)" class="btn btn-primary">
+                            Purchase Ticket
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
