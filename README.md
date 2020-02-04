@@ -8,4 +8,14 @@ Demo (Admin):<br>
 
 ***By default there are no flights or accommodation, therefore, you should firstly log into the admin account and add them.***
 
+
+**Dependencies:**
+*  dateutil <br>
+`pip install python-dateutil`
+*  jwt <br>
+`pip install pyjwt`
+*  bcrypt <br>
+`pip install flask-bcrypt`
+
+
 ![Yugen logo](/static/styles/images/yugen_logo.png)
