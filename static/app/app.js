@@ -70,9 +70,30 @@
                 })
                 .state("dashboard.accommodation", {
                     url: "/accommodation",
-                    templateUrl: "app/components/regular_user/accommodation/accommodation.tpl.html",
+                    templateUrl:
+                        "app/components/regular_user/accommodation/accommodation_home.tpl.html",
                     controller: "AccommodationCtrl",
                     controllerAs: "acctrl"
+                })
+                .state("dashboard.details", {
+                    url: "/details/{id}",
+                    templateUrl:
+                        "app/components/regular_user/accommodation/accommodation_details/accommodation_details.tpl.html",
+                    controller: "DetailsCtrl",
+                    controllerAs: "dctrl"
+                })
+                .state("dashboard.flights", {
+                    url: "/flights",
+                    templateUrl: "app/components/regular_user/flights/flights.tpl.html",
+                    controller: "FlightsCtrl",
+                    controllerAs: "fctrl"
+                })
+                .state("dashboard.reservations_and_tickets", {
+                    url: "/reservations_and_tickets",
+                    templateUrl:
+                        "app/components/regular_user/reservations_and_tickets/reservations-and-tickets.tpl.html",
+                    controller: "ReservationsAndTicketsCtrl",
+                    controllerAs: "ratctrl"
                 });
 
             $urlRouterProvider.otherwise("/dashboard");
