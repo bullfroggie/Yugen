@@ -166,6 +166,15 @@ a[aria-expanded="true"] {
     background: #ff8a80 !important;
 }
 
+.thead-bg {
+    background-color: #031b4d;
+    color: white;
+}
+
+p {
+    word-break: break-all;
+}
+
 h1 {
     font-size: 31px;
     line-height: 40px;
