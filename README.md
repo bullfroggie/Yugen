@@ -6,4 +6,6 @@ Demo (Admin):<br>
 <strong>E-mail:</strong> johndoe@gmail.com<br>
 <strong>Password:</strong> testing
 
+***By default there are no flights or accommodation, therefore, you should firstly log into the admin account and add them.***
+
 ![Yugen logo](/static/styles/images/yugen_logo.png)
