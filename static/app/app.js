@@ -64,9 +64,7 @@
                 })
                 .state("dashboard.user_home", {
                     url: "/",
-                    templateUrl: "app/components/regular_user/homepage/homepage.tpl.html",
-                    controller: "UserHomeCtrl",
-                    controllerAs: "uhctrl"
+                    templateUrl: "app/components/regular_user/homepage/homepage.tpl.html"
                 })
                 .state("dashboard.accommodation", {
                     url: "/accommodation",
