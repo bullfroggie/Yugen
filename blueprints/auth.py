@@ -74,7 +74,6 @@ def user_login():
             payload = {
                 "exp": datetime.utcnow() + timedelta(days=90),
                 "iat": datetime.utcnow(),
-                "picture": user["profile_image"],
                 "type": user["user_types_id"],
                 "name": f"{user['first_name']} {user['last_name']}",
                 "sub": user["id"],
