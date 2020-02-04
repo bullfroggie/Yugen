@@ -7,7 +7,7 @@ from utils.db import mysql
 accommodation = Blueprint("accommodation", __name__)
 
 
-@accommodation.route("/api/accommodation/types", methods=["GET"])
+@accommodation.route("/accommodation/types", methods=["GET"])
 def get_accommodation_types():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM accommodation_types")
@@ -18,7 +18,7 @@ def get_accommodation_types():
     return jsonify(accommodation_types), 200
 
 
-@accommodation.route("/api/accommodation", methods=["GET"])
+@accommodation.route("/accommodation", methods=["GET"])
 def get_all_accommodations():
     cursor = mysql.get_db().cursor()
     cursor.execute(
@@ -31,7 +31,7 @@ def get_all_accommodations():
     return jsonify(accommodations), 200
 
 
-@accommodation.route("/api/accommodation", methods=["POST"])
+@accommodation.route("/accommodation", methods=["POST"])
 def add_accommodation():
     db = mysql.get_db()
     cursor = db.cursor()
@@ -53,7 +53,7 @@ def add_accommodation():
     return jsonify(request.json), 201
 
 
-@accommodation.route("/api/accommodation/upload/<hotel>", methods=["POST"])
+@accommodation.route("/accommodation/upload/<hotel>", methods=["POST"])
 def upload_images(hotel):
 
     app = current_app._get_current_object()
@@ -68,7 +68,7 @@ def upload_images(hotel):
     return "", 201
 
 
-@accommodation.route("/api/accommodation/images", methods=["GET"])
+@accommodation.route("/accommodation/images", methods=["GET"])
 def get_images():
 
     app = current_app._get_current_object()
@@ -89,7 +89,7 @@ def get_images():
     return jsonify(listed), 200
 
 
-@accommodation.route("/api/accommodation/<int:accommodation_id>", methods=["GET"])
+@accommodation.route("/accommodation/<int:accommodation_id>", methods=["GET"])
 def get_accommodation(accommodation_id):
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM accommodation WHERE id = %s", (accommodation_id,))
@@ -99,7 +99,7 @@ def get_accommodation(accommodation_id):
     return jsonify(accommodation), 200
 
 
-@accommodation.route("/api/accommodation/city/<city_name>", methods=["GET"])
+@accommodation.route("/accommodation/city/<city_name>", methods=["GET"])
 def get_accommodation_by_city(city_name):
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM cities WHERE name = %s", (city_name,))
@@ -119,7 +119,7 @@ def get_accommodation_by_city(city_name):
     return jsonify(accommodations), 200
 
 
-@accommodation.route("/api/accommodation/details/<int:id>", methods=["GET"])
+@accommodation.route("/accommodation/details/<int:id>", methods=["GET"])
 def get_accommodation_by_id(id):
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM accommodation WHERE id = %s", (id,))
@@ -131,7 +131,7 @@ def get_accommodation_by_id(id):
 
 
 @accommodation.route(
-    "/api/accommodation/filter/<string:city_name>/<int:stars>", methods=["GET"]
+    "/accommodation/filter/<string:city_name>/<int:stars>", methods=["GET"]
 )
 def filter_accommodation_by_stars(city_name, stars):
     cursor = mysql.get_db().cursor()
@@ -153,7 +153,7 @@ def filter_accommodation_by_stars(city_name, stars):
     return jsonify(filtered), 200
 
 
-@accommodation.route("/api/accommodation/edit/<int:accommodation_id>", methods=["PUT"])
+@accommodation.route("/accommodation/edit/<int:accommodation_id>", methods=["PUT"])
 def edit_accommodation(accommodation_id):
 
     app = current_app._get_current_object()
@@ -180,7 +180,7 @@ def edit_accommodation(accommodation_id):
     return "", 200
 
 
-@accommodation.route("/api/accommodation/<int:accommodation_id>", methods=["DELETE"])
+@accommodation.route("/accommodation/<int:accommodation_id>", methods=["DELETE"])
 def delete_accommodation(accommodation_id):
 
     app = current_app._get_current_object()

@@ -6,7 +6,7 @@ from utils.db import mysql, pymysql
 flights = Blueprint("flights", __name__)
 
 
-@flights.route("/api/airlines", methods=["GET"])
+@flights.route("/airlines", methods=["GET"])
 def get_airlines():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM airlines ORDER BY name ASC")
@@ -17,7 +17,7 @@ def get_airlines():
     return jsonify(airlines), 200
 
 
-@flights.route("/api/flight/types", methods=["GET"])
+@flights.route("/flight/types", methods=["GET"])
 def get_flight_types():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM flight_types")
@@ -28,7 +28,7 @@ def get_flight_types():
     return jsonify(flight_types), 200
 
 
-@flights.route("/api/flights", methods=["GET"])
+@flights.route("/flights", methods=["GET"])
 def get_all_flights():
     cursor = mysql.get_db().cursor()
     cursor.execute(
@@ -41,9 +41,7 @@ def get_all_flights():
     return jsonify(flights), 200
 
 
-@flights.route(
-    "/api/flights/search/<string:from_city>/<string:to_city>", methods=["GET"]
-)
+@flights.route("/flights/search/<string:from_city>/<string:to_city>", methods=["GET"])
 def search_for_flights(from_city, to_city):
     cursor = mysql.get_db().cursor()
     cursor.execute(
@@ -57,7 +55,7 @@ def search_for_flights(from_city, to_city):
     return jsonify(flights), 200
 
 
-@flights.route("/api/flight/classes", methods=["GET"])
+@flights.route("/flight/classes", methods=["GET"])
 def get_flight_classes():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM flight_classes")
@@ -68,7 +66,7 @@ def get_flight_classes():
     return jsonify(flight_classes), 200
 
 
-@flights.route("/api/airports", methods=["GET"])
+@flights.route("/airports", methods=["GET"])
 def get_airports():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM airports ORDER BY name ASC")
@@ -79,7 +77,7 @@ def get_airports():
     return jsonify(airports), 200
 
 
-@flights.route("/api/flights", methods=["POST"])
+@flights.route("/flights", methods=["POST"])
 def add_flight():
     db = mysql.get_db()
     cursor = db.cursor()
@@ -98,7 +96,7 @@ def add_flight():
     return jsonify(request.json), 201
 
 
-@flights.route("/api/flights/<int:flight_id>", methods=["GET"])
+@flights.route("/flights/<int:flight_id>", methods=["GET"])
 def get_flight(flight_id):
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM flights WHERE id = %s", (flight_id,))
@@ -109,7 +107,7 @@ def get_flight(flight_id):
     return jsonify(flight)
 
 
-@flights.route("/api/flights/edit/<int:flight_id>", methods=["PUT"])
+@flights.route("/flights/edit/<int:flight_id>", methods=["PUT"])
 def edit_flight(flight_id):
     db = mysql.get_db()
     cursor = db.cursor()
@@ -127,7 +125,7 @@ def edit_flight(flight_id):
     return "", 200
 
 
-@flights.route("/api/flights/<int:flight_id>", methods=["DELETE"])
+@flights.route("/flights/<int:flight_id>", methods=["DELETE"])
 def delete_flight(flight_id):
     db = mysql.get_db()
     cursor = db.cursor()

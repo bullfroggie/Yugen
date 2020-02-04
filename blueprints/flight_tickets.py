@@ -5,7 +5,7 @@ from utils.db import mysql
 flight_tickets = Blueprint("flight_tickets", __name__)
 
 
-@flight_tickets.route("/api/flights/ticket", methods=["POST"])
+@flight_tickets.route("/flights/ticket", methods=["POST"])
 def purchase_ticket():
     db = mysql.get_db()
     cursor = db.cursor()
@@ -24,7 +24,7 @@ def purchase_ticket():
     return jsonify(request.json), 201
 
 
-@flight_tickets.route("/api/tickets/<int:id>", methods=["GET"])
+@flight_tickets.route("/tickets/<int:id>", methods=["GET"])
 def get_tickets(id):
     cursor = mysql.get_db().cursor()
     cursor.execute(
@@ -38,9 +38,7 @@ def get_tickets(id):
     return jsonify(tickets), 200
 
 
-@flight_tickets.route(
-    "/api/tickets/<int:flight_id>/<int:ticket_id>", methods=["DELETE"]
-)
+@flight_tickets.route("/tickets/<int:flight_id>/<int:ticket_id>", methods=["DELETE"])
 def delete_ticket(flight_id, ticket_id):
     db = mysql.get_db()
     cursor = db.cursor()

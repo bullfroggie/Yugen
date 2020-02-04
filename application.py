@@ -25,14 +25,14 @@ app.config["IMAGE_UPLOADS"] = "static/styles/images/accommodation_images/"
 mysql.init_app(app)
 bcrypt.init_app(app)
 
-app.register_blueprint(auth)
-app.register_blueprint(users)
-app.register_blueprint(countries)
-app.register_blueprint(cities)
-app.register_blueprint(accommodation)
-app.register_blueprint(reservations)
-app.register_blueprint(flights)
-app.register_blueprint(flight_tickets)
+app.register_blueprint(auth, url_prefix="/api")
+app.register_blueprint(users, url_prefix="/api")
+app.register_blueprint(countries, url_prefix="/api")
+app.register_blueprint(cities, url_prefix="/api")
+app.register_blueprint(accommodation, url_prefix="/api")
+app.register_blueprint(reservations, url_prefix="/api")
+app.register_blueprint(flights, url_prefix="/api")
+app.register_blueprint(flight_tickets, url_prefix="/api")
 
 
 @app.route("/")

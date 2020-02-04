@@ -6,7 +6,7 @@ from utils.db import mysql
 reservations = Blueprint("reservations", __name__)
 
 
-@reservations.route("/api/accommodation/reservation", methods=["POST"])
+@reservations.route("/accommodation/reservation", methods=["POST"])
 def make_reservation():
     db = mysql.get_db()
     cursor = db.cursor()
@@ -31,7 +31,7 @@ def make_reservation():
     return jsonify(request.json), 201
 
 
-@reservations.route("/api/reservations/<int:id>", methods=["GET"])
+@reservations.route("/reservations/<int:id>", methods=["GET"])
 def get_reservations(id):
     cursor = mysql.get_db().cursor()
     cursor.execute(
@@ -46,7 +46,7 @@ def get_reservations(id):
 
 
 @reservations.route(
-    "/api/reservations/<int:accommodation_id>/<int:reservation_id>", methods=["DELETE"]
+    "/reservations/<int:accommodation_id>/<int:reservation_id>", methods=["DELETE"]
 )
 def delete_reservation(accommodation_id, reservation_id):
     db = mysql.get_db()

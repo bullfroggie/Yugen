@@ -11,7 +11,7 @@ auth = Blueprint("auth", __name__)
 bcrypt = Bcrypt()
 
 
-@auth.route("/api/user/registration", methods=["POST"])
+@auth.route("/user/registration", methods=["POST"])
 def user_registration():
 
     db = mysql.get_db()
@@ -56,7 +56,7 @@ def user_registration():
         return "That username is taken. Try another one.", 409
 
 
-@auth.route("/api/user/login", methods=["POST"])
+@auth.route("/user/login", methods=["POST"])
 def user_login():
 
     app = current_app._get_current_object()
@@ -96,7 +96,7 @@ def user_login():
         return "The email that you've entered does not match our records.", 404
 
 
-@auth.route("/api/user/logout", methods=["POST"])
+@auth.route("/user/logout", methods=["POST"])
 def user_logout():
     resp = make_response("User logged out!", 205)
     resp.set_cookie("yugen_user", "", 0)

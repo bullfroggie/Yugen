@@ -5,7 +5,7 @@ from utils.db import mysql
 countries = Blueprint("countries", __name__)
 
 
-@countries.route("/api/countries", methods=["GET"])
+@countries.route("/countries", methods=["GET"])
 def get_countries():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM countries")

@@ -6,7 +6,7 @@ from utils.db import mysql
 users = Blueprint("users", __name__)
 
 
-@users.route("/api/user", methods=["GET"])
+@users.route("/user", methods=["GET"])
 def get_logged_in():
 
     app = current_app._get_current_object()
@@ -24,7 +24,7 @@ def get_logged_in():
     return jsonify(user), 200
 
 
-@users.route("/api/users", methods=["GET"])
+@users.route("/users", methods=["GET"])
 def get_all_users():
 
     app = current_app._get_current_object()
@@ -43,7 +43,7 @@ def get_all_users():
     return jsonify(users), 200
 
 
-@users.route("/api/users/<int:user_id>", methods=["DELETE"])
+@users.route("/users/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id):
     db = mysql.get_db()
     cursor = db.cursor()

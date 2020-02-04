@@ -5,7 +5,7 @@ from utils.db import mysql
 cities = Blueprint("cities", __name__)
 
 
-@cities.route("/api/cities", methods=["GET"])
+@cities.route("/cities", methods=["GET"])
 def get_cities():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM cities ORDER BY name ASC")
@@ -16,7 +16,7 @@ def get_cities():
     return jsonify(cities), 200
 
 
-@cities.route("/api/cities/filter/<int:country_id>", methods=["GET"])
+@cities.route("/cities/filter/<int:country_id>", methods=["GET"])
 def get_cities_by_country(country_id):
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM cities WHERE countries_id = %s", (country_id,))
