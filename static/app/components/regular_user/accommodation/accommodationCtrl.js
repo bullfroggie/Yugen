@@ -16,7 +16,7 @@
             $scope.unavailableCounter = 0;
 
             this.getAccommodations = function() {
-                $http.get("/api/accommodation/city/" + that.searched).then(
+                $http.get("api/accommodation/city/" + that.searched).then(
                     function(response) {
                         console.log(response);
                         that.accommodations = response.data;

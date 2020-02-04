@@ -23,7 +23,7 @@
             $scope.isReadonly = true;
 
             this.getAllUsers = function() {
-                $http.get("/api/users").then(
+                $http.get("api/users").then(
                     function(response) {
                         console.log(response);
                         that.users = response.data;
@@ -35,7 +35,7 @@
             };
 
             this.deleteUser = function(id) {
-                $http.delete("/api/users/" + id).then(
+                $http.delete("api/users/" + id).then(
                     function(response) {
                         console.log(response);
                         that.getAllUsers();
@@ -47,7 +47,7 @@
             };
 
             this.getAllAccommodations = function() {
-                $http.get("/api/accommodation").then(
+                $http.get("api/accommodation").then(
                     function(response) {
                         console.log(response);
                         that.accommodations = response.data;
@@ -59,7 +59,7 @@
             };
 
             this.deleteAccommodation = function(id) {
-                $http.delete("/api/accommodation/" + id).then(
+                $http.delete("api/accommodation/" + id).then(
                     function(response) {
                         console.log(response);
                         that.getAllAccommodations();
@@ -83,7 +83,7 @@
             };
 
             this.deleteFlight = function(id) {
-                $http.delete("/api/flights/" + id).then(
+                $http.delete("api/flights/" + id).then(
                     function(response) {
                         console.log(response);
                         that.getAllFlights();

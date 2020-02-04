@@ -64,7 +64,7 @@
             };
 
             this.getCities = function() {
-                $http.get("/api/cities").then(
+                $http.get("api/cities").then(
                     function(response) {
                         console.log(response);
                         that.cities = response.data;
@@ -76,7 +76,7 @@
             };
 
             this.getAccommodationTypes = function() {
-                $http.get("/api/accommodation/types").then(
+                $http.get("api/accommodation/types").then(
                     function(response) {
                         console.log(response);
                         that.accommodationTypes = response.data;
@@ -88,7 +88,7 @@
             };
 
             this.addAccommodation = function() {
-                $http.post("/api/accommodation", that.newAccommodation).then(
+                $http.post("api/accommodation", that.newAccommodation).then(
                     function(response) {
                         console.log(response);
                         that.uploadPic(that.images);
