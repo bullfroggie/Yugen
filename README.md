@@ -10,6 +10,6 @@ Demo (Admin):<br>
 
 
 **Install Dependencies by running the following command** :dolphin:<br>
-*  `pip install -r requirements.txt`
+*  `pip install -f requirements.txt`
 
 ![Yugen logo](/static/styles/images/yugen_logo.png)
